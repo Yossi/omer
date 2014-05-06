@@ -1,0 +1,32 @@
+<html>
+<head>
+<title>Omer Start Page</title>
+</head>
+<body>
+<form action="http://yossi.no-ip.org:8000/cgi-bin/omer.py">
+
+<label for=zip>Enter your five digit zipcode:</label>
+<input type=text name=zipcode maxlength=5 size=5 id=zip />
+If you are not in a zipcode, don't rely on the times or days that are automatically calculated. (blank defaults to 94303)<br />
+
+<label for=day><small>(Optional)</small> Specify day of omer to see:</label>
+<input type=text name=day maxlength=2 size=2 id=day />
+Leave blank to have the correct day calculated for you.<br />
+
+Did you cross the International dateline?<br />
+<label for=no>No, I did not</label>
+<input type=radio name=dateline value=false id=no checked /><br />
+<label for=east>Yes, I went east</label>
+<input type=radio name=dateline value=east id=east /><br />
+<label for=west>Yes, I went west</label>
+<input type=radio name=dateline value=west id=west /><br />
+
+<input type="submit" value="Let's Count" />
+</form>
+<hr />
+During the daytime, we do not say the blessing. This will be represented as smaller, gray text.<br />
+Between sundown and nightfall, there are differing opinions as to whether or not one may count yet. This is represented by showing the next day starting from sunset, but with a shaded background until after nightfall.<br />
+If you are not reciting with a Minyan, then it is probably best to wait for nightfall proper. The time of nightfall is provided.<br />
+To save yourself from needing to enter your information every time, simply bookmark the resulting URL. It will keep up-to-date on future visits.
+</body>
+</html>
