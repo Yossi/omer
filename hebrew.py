@@ -33,7 +33,6 @@ def textforday(day, times=''):
         font-size:18px;
         width:620px;
         float:right;
-        /*background:url('http://www.dream-wallpaper.com/free-wallpaper/nature-wallpaper/wheat-field-1-wallpaper/1680x1050/free-wallpaper-12.jpg') no-repeat right top;*/
       }
       #bracha { %(bracha_style)s }
       #yom { font-size:22px; }
@@ -184,7 +183,8 @@ def ribonoshelolam(day):
             s = u'י' + sefiros[week][2:] if week == 5 else sefiros[week]
             return u'<span class=bigbold>' + sefiros[day] + u' שֶׁבִּ' + s + u'</span>'
         else:
-            return u'<span class=bigbold>' + sefiros[day] + u' שֶׁבְּ' + sefiros[week] + u'</span>'
+            s = u'ת' + sefiros[week][2:] if week == 2 else sefiros[week]
+            return u'<span class=bigbold>' + sefiros[day] + u' שֶׁבְּ' + s + u'</span>'
 
     ribonoshelolam = [
 u'רִבּוֹנוֹ שֶׁל עוֹלָם, אַתָּה צִוִּיתָנוּ עַל יְדֵי משֶׁה עַבְדֶּךָ לִסְפּוֹר סְפִירַת הָעוֹמֶר כְּדֵי לְטַהֲרֵנוּ מִקְלִפּוֹתֵינוּ וּמִטּוּמְאוֹתֵינוּ, כְּמוֹ שֶׁכָּתַבְתָּ בְּתוֹרָתֶךָ׃',
