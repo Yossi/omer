@@ -67,7 +67,7 @@ def refine_day(zipcode='94303'):
     return -1
 
 def date_line(dateline):
-    results = {'east': 1, 'west': -1}
+    results = {'east': 1, 'west': -1, '1': 1, '-1': -1}
     return results.get(dateline.lower(), 0)
     
 def do_cgi():

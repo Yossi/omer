@@ -3,23 +3,19 @@
 <title>Omer Start Page</title>
 </head>
 <body>
-<form action="http://yossi.no-ip.org:8000/cgi-bin/omer.py">
+<form action="http://yossi.no-ip.org/omer">
 
 <label for=zip>Enter your five digit zipcode:</label>
-<input type=text name=zipcode maxlength=5 size=5 id=zip />
+<input type=number name=zipcode maxlength=5 size=2 id=zip />
 If you are not in a zipcode, don't rely on the times or days that are automatically calculated. (blank defaults to 94303)<br />
 
 <label for=day><small>(Optional)</small> Specify day of omer to see:</label>
-<input type=text name=day maxlength=2 size=2 id=day />
+<input type=number name=day maxlength=2 size=2 id=day min=1 max=49 step=1 />
 Leave blank to have the correct day calculated for you.<br />
 
-Did you cross the International dateline?<br />
-<label for=no>No, I did not</label>
-<input type=radio name=dateline value=false id=no checked /><br />
-<label for=east>Yes, I went east</label>
-<input type=radio name=dateline value=east id=east /><br />
-<label for=west>Yes, I went west</label>
-<input type=radio name=dateline value=west id=west /><br />
+Did you cross the International dateline? (Not everyone holds of this modifier. Consult your local orthodox Rabbi.)<br />
+
+West <input type=range min=-1 max=1 step=1 value=0 name=dateline /> East<br />
 
 <input type="submit" value="Let's Count" />
 </form>
