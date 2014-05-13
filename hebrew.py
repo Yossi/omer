@@ -99,7 +99,7 @@ def textforday(day, times=''):
 </html>
 '''
 
-    tzeit = u'צאת הכוכבים׃' + u' '.join(str(times[u'nightfall']).split()[::-1])
+    tzeit = u'צאת הכוכבים׃' + times[u'nightfall'].strftime(u'%H:%M %Y-%m-%d')
     twilight = u'background-color:#ddd;' if times['now'][0] < times[u'nightfall'] and times['now'][0] > times[u'sunset'] else u''
     bracha_style = u'color:#aaa;font-size:14px;' if times['now'][0] < times[u'sunset'] and times['now'][0] > times[u'dawn'] else u'font-size:21px;'
     bracha = u'בָּרוּךְ אַתָּה יְהוָה אֱלהֵינוּ מֶלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָׁנוּ בְּמִצְוֹתָיו, וְצִוָּנוּ עַל סְפִירַת הָעוֹמֶר'

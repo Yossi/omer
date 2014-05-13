@@ -11,7 +11,6 @@ cgitb.enable()
 
 import sys, os
 sys.path.append(os.path.dirname(__file__))
-import urllib2
 
 # if you insist on getting this to work with mod_python, you will need to 
 # install an older version of dateutil (python-dateutil==1.5 works)
@@ -63,7 +62,7 @@ def refine_day(zipcode='94303'):
     heb_date, times = chabad_org(zipcode)
     day = omer_day(heb_date)
     if day:
-        return int(day) + int(times['now'][0] > times['sunset']) # turn a bool into an int
+        return int(day) + int(times['now'][0] > times['sunset']) # boolean turns into an int
     return -1
 
 def date_line(dateline):
