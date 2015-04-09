@@ -68,7 +68,7 @@ def refine_day(zipcode='94303'):
 def date_line(dateline):
     results = {'east': 1, 'west': -1, '1': 1, '-1': -1}
     return results.get(dateline.lower(), 0)
-    
+
 def do_cgi():
     form = cgi.FieldStorage()
     zipcode = form.getvalue('zipcode', '94303')
@@ -81,22 +81,6 @@ def do_cgi():
 
     print 'Content-Type: text/html; charset=UTF-8\n'
     print text 
-    
-def handler(req):
-    # feel free to ignore this entire function if not using mod_python
-    # (and wtf is wrong with you if you are?)
-    req.content_type = 'text/html; charset=UTF8'
-    form = util.FieldStorage(req)
-    zipcode = form.get('zipcode', '94303')
-    day = form.get('day', str(refine_day(zipcode)))
-    dateline = form.get('dateline', '')
-    try: day = int(day) + date_line(dateline)
-    except ValueError: pass
-    
-    text = textforday(day, times).encode('utf-8')
-    
-    req.write(text)
-    return apache.OK
 
 def application(environ, start_response):
     # wsgi version
@@ -106,9 +90,9 @@ def application(environ, start_response):
     dateline = form.getvalue('dateline', '')
     try: day = int(day) + date_line(dateline)
     except ValueError: pass
-    
+
     text = textforday(day, times).encode('utf-8')
-    
+
     status = '200 OK'
     response_headers = [('Content-type', 'text/html; charset=UTF-8')]
     start_response(status, response_headers)

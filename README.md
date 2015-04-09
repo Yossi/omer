@@ -1,2 +1,5 @@
 omer
 ====
+From the second night of Passover until the day before the holiday of Shavuot, the Jewish people engage in an unique mitzvah called Sefirat HaOmer (counting of the Omer). The Torah commands us that during this time each year we count seven complete weeks, for a total of 49 days. At the end of the seven-week period we celebrate Shavuot, which means “weeks.”
+
+This is considered a mitzvah, so the count, which takes place each night, is preceded by a blessing. However, we may recite the blessing only if we have not missed a single day’s counting. If we have omitted the counting even one night during that stretch (and did not make it up during the daytime without reciting the blessing), we may no longer recite the blessing, but instead must listen as a friend says the blessing and then do the counting.
