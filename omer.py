@@ -3,26 +3,21 @@
 # this project depends on the following being available, you can get them via pip
 # pip install python-dateutil feedparser ntplib BeautifulSoup
 
-try: from mod_python import apache, util
-except ImportError: pass
-
 import cgi, cgitb
 cgitb.enable()
 
 import sys, os
 sys.path.append(os.path.dirname(__file__))
 
-# if you insist on getting this to work with mod_python, you will need to 
-# install an older version of dateutil (python-dateutil==1.5 works)
 from dateutil.parser import parse # pip install python-dateutil
 import feedparser # pip install feedparser
 
 from hebrew import textforday
 import time_util # pip install ntplib BeautifulSoup
-reload(time_util)
+reload(time_util) # I think what happens is sometimes time_util sometimes gets cached and gets stuck returning the same time forever. This fixes that.
 
 def omer_day(heb_date):
-    ''' returns the day of the omer for the given hebrew date (i.e. what omer we count on the evening it becomes this date?)
+    ''' returns the day of the omer for the given hebrew date (i.e. answers the question "what omer do we count on the evening it becomes this date?")
         returns None if the date is not during the omer
     '''
     month, day = heb_date.partition(',')[0].rpartition(' ')[::2]
@@ -55,7 +50,7 @@ def chabad_org(zipcode):
             times['nightfall'] = parse(entry.title.split('-')[1])
     return info.feed.hebrew_date, times
 
-times = ''
+times = {}
 def refine_day(zipcode='94303'):
     ''' adjusts for before/after tzeit '''
     global times
@@ -99,11 +94,10 @@ def application(environ, start_response):
     return [text]
 
 # uncomment the following 2 lines for in-browser debugging, but be sure to comment
-#  them out again when done since THEY ALLOW RUNNING OF ARBITRARY CODE FROM THE BROWSER!!
+# them out again when done since THEY ALLOW RUNNING OF ARBITRARY CODE FROM THE BROWSER!!
 
 #from paste.evalexception.middleware import EvalException # pip install paste
 #application = EvalException(application)
-#from pprint import pprint as p
 
 if __name__ == '__main__':
     do_cgi()
