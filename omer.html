@@ -1,28 +1,67 @@
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
 <head>
-<title>Omer Start Page</title>
+
+  <title>Omer Start Page</title>
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" type="text/css" />
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" type="text/javascript"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js" type="text/javascript"></script>
+  
+  <!-- for mobile platforms -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta charset="UTF-8" />
 </head>
+
 <body>
-<form action="http://yossi.no-ip.org/omer">
+  <div class="container">
+    <h2>Input Form for Counting Omer</h2>
 
-<label for=zip>Enter your five digit zipcode:</label>
-<input type=number name=zipcode maxlength=5 size=2 id=zip />
-If you are not in a zipcode, don't rely on the times or days that are automatically calculated. (blank defaults to 94303)<br />
+    <p>During the daytime, we do not say the blessing. This will be represented as
+    smaller, gray text.<br />
+    Between sundown and nightfall, there are differing opinions as to whether or not one
+    may count yet. This is represented by showing the next day starting from sunset, but
+    with a shaded background until after nightfall.<br />
+    If you are not reciting with a Minyan, then it is probably best to wait for nightfall
+    proper. The time of nightfall is provided.<br />
+    To save yourself from needing to enter your information every time, simply bookmark
+    the resulting link. It will keep up-to-date on future visits.</p>
 
-<label for=day><small>(Optional)</small> Specify day of omer to see:</label>
-<input type=number name=day maxlength=2 size=2 id=day min=1 max=49 step=1 />
-Leave blank to have the correct day calculated for you.<br />
+    <form class="form" role="form" action="http://yossi.no-ip.org/omer" style=
+    "width:90%;margin-left:100">
+      <div class="form-group">
+        <label for="zip">Zip Code:</label> If you are not in a zipcode, do not rely on
+        the times or days that are automatically calculated. (blank defaults to
+        Palo Alto zip code, that is 94303)<br />
+        <input type="text" name="zipcode" maxlength="5" size="2" pattern="[1-9][0-9]{0,4}" id="zip" class=
+        "form-control" placeholder="5 Digit Zip Code" />
+      </div>
 
-Did you cross the International dateline? (Not everyone holds of this modifier. Consult your local orthodox Rabbi.)<br />
-
-West <input type=range min=-1 max=1 step=1 value=0 name=dateline /> East<br />
-
-<input type="submit" value="Let's Count" />
-</form>
-<hr />
-During the daytime, we do not say the blessing. This will be represented as smaller, gray text.<br />
-Between sundown and nightfall, there are differing opinions as to whether or not one may count yet. This is represented by showing the next day starting from sunset, but with a shaded background until after nightfall.<br />
-If you are not reciting with a Minyan, then it is probably best to wait for nightfall proper. The time of nightfall is provided.<br />
-To save yourself from needing to enter your information every time, simply bookmark the resulting URL. It will keep up-to-date on future visits.
+      <div class="form-group">
+        <label for="day">Day of the Omer (optional):</label> Leave blank to have the
+        correct day calculated for you.<br />
+        <input type="number" class="form-control" name="day" maxlength="2" size="2" id=
+        "day" min="1" max="49" step="1" placeholder="Day of the Omer" />
+      </div>
+      <div class="form-group">
+        <div class="form-inline" class="col-xs-12">
+            <label for="west">West</label> 
+            <div class="form-group"><input type="range" min="-1" max="1" step="1" value="0" name="dateline"/></div>
+            <label for="west">East</label> 
+        </div>
+	  </div>
+      <input type="submit" class="btn btn-default center-block" value=
+      "Let's Count" />
+    </form>
+  </div>
 </body>
 </html>
