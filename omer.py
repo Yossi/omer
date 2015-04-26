@@ -16,6 +16,10 @@ from hebrew import textforday
 import time_util # pip install ntplib BeautifulSoup
 reload(time_util) # I think what happens is sometimes time_util sometimes gets cached and gets stuck returning the same time forever. This fixes that.
 
+from flask import Flask
+from flask import request
+app = Flask(__name__)
+
 def omer_day(heb_date):
     ''' returns the day of the omer for the given hebrew date (i.e. answers the question "what omer do we count on the evening it becomes this date?")
         returns None if the date is not during the omer
@@ -64,21 +68,18 @@ def date_line(dateline):
     results = {'east': 1, 'west': -1, '1': 1, '-1': -1}
     return results.get(dateline.lower(), 0)
 
-def do_cgi():
-    form = cgi.FieldStorage()
-    zipcode = form.getvalue('zipcode', '94303')
-    day = form.getvalue('day', refine_day(zipcode))
-    dateline = form.getvalue('dateline', '')
+@app.route('/')
+def omer():
+    form = request.args
+    zipcode = form.get('zipcode', '94303')
+    day = form.get('day', refine_day(zipcode))
+    dateline = form.get('dateline', '')
     try: day = int(day) + date_line(dateline)
     except ValueError: pass
     
-    text = textforday(day, times).encode('utf-8')
-
-    print 'Content-Type: text/html; charset=UTF-8\n'
-    print text 
+    return textforday(day, times).encode('utf-8')
 
 def application(environ, start_response):
-    # wsgi version
     form = cgi.FieldStorage(fp=environ['wsgi.input'], environ=environ)
     zipcode = form.getvalue('zipcode', '94303')
     day = form.getvalue('day', refine_day(zipcode))
@@ -100,12 +101,4 @@ def application(environ, start_response):
 #application = EvalException(application)
 
 if __name__ == '__main__':
-    do_cgi()
-    
-    # to see in a browser (and you really should), place the relevant modules
-    # in a directory called cgi-bin. then from the directory above that, call:
-    
-    # python -m CGIHTTPServer
-
-# Should always be 2
-ONE = 3
+    app.run(debug=True)
