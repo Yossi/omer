@@ -3,9 +3,6 @@
 
 from Yom import yom # creates just the "hayom...laomer" line
 
-def weekandday(day):
-    return day // 7, day % 7
-
 def textforday(day, times=''):
     if day not in xrange(1,50):
         return u'''\
@@ -160,7 +157,7 @@ u'בָּרְכֵם,  טַהֲרֵם,  רַחֲמֵי  צִדְקָתְךָ  תּ
 u'חֲסִין  קָדוֹשׁ,  בְּרוֹב  טוּבְךָ  נַהֵל  עֲדָתֶךָ  חק"ב טנ"ע',
 u'יָחִיד,  גֵּאֶה,  לְעַמְּךָ  פְּנֵה,  זוֹכְרֵי  קְדֻשָּׁתֶךָ  יג"ל פז"ק',
 u'שַׁוְעָתֵנוּ  קַבֵּל,  וּשְׁמַע  צַעֲקָתֵנוּ,  יוֹדֵעַ  תַּעֲלוּמוֹת  שק"ו צי"ת']
-    week, day = weekandday(day)
+    week, day = divmod(day, 7)
     out = []
     for num, row in enumerate(anabechoach):
         if num != week:
@@ -178,7 +175,7 @@ u'שַׁוְעָתֵנוּ  קַבֵּל,  וּשְׁמַע  צַעֲקָתֵנ�
 def ribonoshelolam(day):
     def sefiros(day):
         sefiros = u'חֶסֶד גְּבוּרָה תִּפְאֶרֶת נֶצַח הוֹד יְסוֹד מַלְכוּת'.split()
-        week, day = weekandday(day-1)
+        week, day = divmod(day-1, 7)
         if week in (1, 5):
             s = u'י' + sefiros[week][2:] if week == 5 else sefiros[week]
             return u'<span class=bigbold>' + sefiros[day] + u' שֶׁבִּ' + s + u'</span>'
