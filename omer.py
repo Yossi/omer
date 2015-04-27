@@ -71,8 +71,12 @@ def date_line(dateline):
 @app.route('/')
 def omer():
     form = request.args
-    zipcode = form.get('zipcode', '94303')
-    day = form.get('day', refine_day(zipcode))
+    zipcode = form.get('zipcode')
+    if not zipcode:
+        zipcode = '94303'
+    day = form.get('day')
+    if not day:
+        day = refine_day(zipcode)
     dateline = form.get('dateline', '')
     try: day = int(day) + date_line(dateline)
     except ValueError: pass
