@@ -16,7 +16,7 @@ from hebrew import textforday
 import time_util # pip install ntplib BeautifulSoup
 reload(time_util) # I think what happens is sometimes time_util sometimes gets cached and gets stuck returning the same time forever. This fixes that.
 
-from flask import Flask
+from flask import Flask # pip install flask
 from flask import request
 app = Flask(__name__)
 
@@ -71,12 +71,8 @@ def date_line(dateline):
 @app.route('/')
 def omer():
     form = request.args
-    zipcode = form.get('zipcode')
-    if not zipcode:
-        zipcode = '94303'
-    day = form.get('day')
-    if not day:
-        day = refine_day(zipcode)
+    zipcode = form.get('zipcode') or '94303'
+    day = form.get('day') or refine_day(zipcode)
     dateline = form.get('dateline', '')
     try: day = int(day) + date_line(dateline)
     except ValueError: pass
