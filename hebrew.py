@@ -1,100 +1,12 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+from flask import render_template
 from Yom import yom # creates just the "hayom...laomer" line
 
 def textforday(day, times=''):
     if day not in xrange(1,50):
-        return u'''\
-<html>
-  <head>
-    <title>Error</title>
-  </head>
-  <body>
-    <div>
-      Invalid input for day of Omer: %s
-    </div>
-  </body>
-</html>
-''' % day
-
-    html = u'''<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
-  <head>
-    <title>Day %(day)s</title>
-    <style type="text/css">
-      @import url(/fonts/FrankRuhel/stylesheet.css);
-      body
-      {
-        font-family:'frank_ruehl', vilna, "Times New Roman", Times, serif;
-        font-size:18px;
-        width:620px;
-        float:right;
-      }
-      #bracha { %(bracha_style)s }
-      #yom { font-size:22px; }
-      .bold { font-weight:bold; }
-      .bigbold 
-      {
-        font-weight:bold;
-        font-size:19px;
-      }
-      #red
-      {
-        font-weight:bold;
-        font-size:20px;
-        color:red;
-      }
-      .center { text-align:center; }
-      .left { text-align:left; }
-      td { text-align:right; }
-      table { %(twilight)s }
-      #transparent { background:rgba(255, 255, 255, 0.3); }
-      
-    </style>
-  </head>
-  <body>
-    <table border=0>
-      <tr>
-        <td>
-          %(tzeit)s - %(zipcode)s
-          <hr />
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <span id=bracha>%(bracha)s</span><br /><br />
-          <span id=yom>%(yom)s</span><br /><br />
-          %(harachaman)s<br /><br />
-          %(lamnatzeach)s<br /><br />
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <table border=0 style="float:right;">
-            %(anabechoach)s
-            <tr>
-              <td colspan=2 class=center>
-                %(baruchshem)s
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <br />%(ribonoshelolam)s
-        </td>
-      </tr>
-    </table>
-    
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script type="text/javascript" charset="utf-8">
-      $(function() { $('body').hide().show(); });
-    </script>
-  </body>
-</html>
-'''
+        return render_template('error.html', day=day)
 
     tzeit = u'צאת הכוכבים׃' + times[u'nightfall'].strftime(u'%H:%M %Y-%m-%d')
     twilight = u'background-color:#ddd;' if times['now'][0] < times[u'nightfall'] and times['now'][0] > times[u'sunset'] else u''
@@ -118,7 +30,7 @@ def textforday(day, times=''):
               u'tzeit': tzeit,
              }
 
-    return html % output
+    return render_template('main.html', **output)
 
 def lamnatzeach(day):
     cday = day

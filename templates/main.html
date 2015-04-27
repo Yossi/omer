@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title>Day {{ day }}</title>
+    <style type="text/css">
+      @import url(/fonts/FrankRuhel/stylesheet.css);
+      body
+      {
+        font-family:'frank_ruehl', vilna, "Times New Roman", Times, serif;
+        font-size:18px;
+        width:620px;
+        float:right;
+      }
+      #bracha { {{ bracha_style }} }
+      #yom { font-size:22px; }
+      .bold { font-weight:bold; }
+      .bigbold 
+      {
+        font-weight:bold;
+        font-size:19px;
+      }
+      #red
+      {
+        font-weight:bold;
+        font-size:20px;
+        color:red;
+      }
+      .center { text-align:center; }
+      .left { text-align:left; }
+      td { text-align:right; }
+      table { {{ twilight }} }
+      #transparent { background:rgba(255, 255, 255, 0.3); }
+      
+    </style>
+  </head>
+  <body>
+    <table border=0>
+      <tr>
+        <td>
+          {{ tzeit }} - {{ zipcode }}
+          <hr />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <span id=bracha>{{ bracha }}</span><br /><br />
+          <span id=yom>{{ yom|safe }}</span><br /><br />
+          {{ harachaman }}<br /><br />
+          {{ lamnatzeach|safe }}<br /><br />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table border=0 style="float:right;">
+            {{ anabechoach|safe }}
+            <tr>
+              <td colspan=2 class=center>
+                {{ baruchshem }}
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <br />{{ ribonoshelolam|safe }}
+        </td>
+      </tr>
+    </table>
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      $(function() { $('body').hide().show(); });
+    </script>
+  </body>
+</html>
