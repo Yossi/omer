@@ -5,7 +5,10 @@ import sqlite3 as lite
 from BeautifulSoup import BeautifulSoup # pip install BeautifulSoup
 
 def UTC():
-    return datetime.datetime.utcfromtimestamp(ntplib.NTPClient().request('ntp2.sbcglobal.net').tx_time)
+    try:
+        return datetime.datetime.utcfromtimestamp(ntplib.NTPClient().request('ntp2.sbcglobal.net').tx_time)
+    except ntplib.NTPException:
+        return datetime.datetime.utcnow()
 
 def zip_time(zipcode):
     ''' find the current time at the zipcode '''
