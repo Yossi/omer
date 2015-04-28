@@ -1,0 +1,5 @@
+flask
+BeautifulSoup
+ntplib
+feedparser
+python-dateutil
