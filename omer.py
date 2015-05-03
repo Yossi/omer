@@ -69,7 +69,8 @@ def date_line(dateline):
 def omer():
     form = request.args
     zipcode = form.get('zipcode') or '94303'
-    day = form.get('day') or refine_day(zipcode)
+    day = refine_day(zipcode)
+    day = form.get('day') or day 
     dateline = form.get('dateline', '')
     try: day = int(day) + date_line(dateline)
     except ValueError: pass
