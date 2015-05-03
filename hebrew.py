@@ -8,6 +8,12 @@ def textforday(day, times=''):
     if day not in xrange(1,50):
         return render_template('error.html', day=day)
 
+    special = {15: u'ראש חודש אייר',
+               16: u'ראש חודש אייר',
+               29: u'פסח שני‎',
+               33: u'ל״ג בעומר',
+               45: u'ראש חודש סיון'}
+
     tzeit = u'צאת הכוכבים׃' + times[u'nightfall'].strftime(u'%H:%M %Y-%m-%d')
     twilight = u'background-color:#ddd;' if times['now'][0] < times[u'nightfall'] and times['now'][0] > times[u'sunset'] else u''
     bracha_style = u'color:#aaa;font-size:14px;' if times['now'][0] < times[u'sunset'] and times['now'][0] > times[u'dawn'] else u'font-size:21px;'
@@ -19,6 +25,7 @@ def textforday(day, times=''):
               u'day': day,
               u'twilight': twilight,
               u'zipcode': times['zipcode'],
+              u'special': special.get(day, ''),
               u'bracha_style': bracha_style,
               u'bracha': bracha+u'׃',
               u'yom': yom(day-1)+u'׃',

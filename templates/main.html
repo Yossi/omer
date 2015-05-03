@@ -3,7 +3,7 @@
   <head>
     <title>Day {{ day }}</title>
     <style type="text/css">
-      @import url(/fonts/FrankRuhel/stylesheet.css);
+      @import url(http://yossi.no-ip.org/fonts/FrankRuhel/stylesheet.css);
       body
       {
         font-family:'frank_ruehl', vilna, "Times New Roman", Times, serif;
@@ -30,14 +30,14 @@
       td { text-align:right; }
       table { {{ twilight }} }
       #transparent { background:rgba(255, 255, 255, 0.3); }
-      
+
     </style>
   </head>
   <body>
     <table border=0>
       <tr>
         <td>
-          {{ tzeit }} - {{ zipcode }}
+          {{ tzeit }} - {{ zipcode }} {{ special }}
           <hr />
         </td>
       </tr>
