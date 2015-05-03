@@ -13,8 +13,7 @@ from hebrew import textforday
 import time_util # pip install ntplib BeautifulSoup
 reload(time_util) # I think what happens is sometimes time_util sometimes gets cached and gets stuck returning the same time forever. This fixes that.
 
-from flask import Flask # pip install flask
-from flask import request
+from flask import Flask, request, send_from_directory # pip install flask
 app = Flask(__name__)
 
 def omer_day(heb_date):
@@ -76,6 +75,10 @@ def omer():
     except ValueError: pass
 
     return textforday(day, times).encode('utf-8')
+
+@app.route('/fonts/<path:path>')
+def send_font(path):
+    return send_from_directory('data/fonts', path)
 
 if __name__ == '__main__':
     app.run(debug=True)

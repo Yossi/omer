@@ -4,10 +4,10 @@
 
 @font-face {
     font-family: 'frank_ruehll';
-    src: url('frankruehlclm-bold-webfont.eot');
-    src: url('frankruehlclm-bold-webfont.eot?#iefix') format('embedded-opentype'),
-         url('frankruehlclm-bold-webfont.woff') format('woff'),
-         url('frankruehlclm-bold-webfont.ttf') format('truetype');
+    src: url('frankruehlclm-bold.eot');
+    src: url('frankruehlclm-bold.eot?#iefix') format('embedded-opentype'),
+         url('frankruehlclm-bold.woff') format('woff'),
+         url('frankruehlclm-bold.ttf') format('truetype');
     font-weight: bold;
     font-style: normal;
 
@@ -18,10 +18,10 @@
 
 @font-face {
     font-family: 'frank_ruehll';
-    src: url('frankruehlclm-boldoblique-webfont.eot');
-    src: url('frankruehlclm-boldoblique-webfont.eot?#iefix') format('embedded-opentype'),
-         url('frankruehlclm-boldoblique-webfont.woff') format('woff'),
-         url('frankruehlclm-boldoblique-webfont.ttf') format('truetype');
+    src: url('frankruehlclm-boldoblique.eot');
+    src: url('frankruehlclm-boldoblique.eot?#iefix') format('embedded-opentype'),
+         url('frankruehlclm-boldoblique.woff') format('woff'),
+         url('frankruehlclm-boldoblique.ttf') format('truetype');
     font-weight: bold;
     font-style: italic;
 
@@ -32,10 +32,10 @@
 
 @font-face {
     font-family: 'frank_ruehl';
-    src: url('frankruehlclm-medium-webfont.eot');
-    src: url('frankruehlclm-medium-webfont.eot?#iefix') format('embedded-opentype'),
-         url('frankruehlclm-medium-webfont.woff') format('woff'),
-         url('frankruehlclm-medium-webfont.ttf') format('truetype');
+    src: url('frankruehlclm-medium.eot');
+    src: url('frankruehlclm-medium.eot?#iefix') format('embedded-opentype'),
+         url('frankruehlclm-medium.woff') format('woff'),
+         url('frankruehlclm-medium.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 
@@ -46,10 +46,10 @@
 
 @font-face {
     font-family: 'frank_ruehl';
-    src: url('frankruehlclm-mediumoblique-webfont.eot');
-    src: url('frankruehlclm-mediumoblique-webfont.eot?#iefix') format('embedded-opentype'),
-         url('frankruehlclm-mediumoblique-webfont.woff') format('woff'),
-         url('frankruehlclm-mediumoblique-webfont.ttf') format('truetype');
+    src: url('frankruehlclm-mediumoblique.eot');
+    src: url('frankruehlclm-mediumoblique.eot?#iefix') format('embedded-opentype'),
+         url('frankruehlclm-mediumoblique.woff') format('woff'),
+         url('frankruehlclm-mediumoblique.ttf') format('truetype');
     font-weight: normal;
     font-style: italic;
 
