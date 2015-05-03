@@ -3,9 +3,6 @@
 # this project depends on the following being available, you can get them via pip
 # pip install python-dateutil feedparser ntplib BeautifulSoup
 
-import cgi, cgitb
-cgitb.enable()
-
 import sys, os
 sys.path.append(os.path.dirname(__file__))
 
@@ -33,7 +30,7 @@ def omer_day(heb_date):
     offset = {'Nissan': -15,
               'Iyar': 15,
               'Sivan': 44}
-    
+
     omer = int(day) + offset.get(month, 50) # 50 to make sure it is always out of range the rest of the year
     return omer if omer in range(1,50) else None
 
@@ -61,7 +58,7 @@ def refine_day(zipcode='94303'):
     heb_date, times = chabad_org(zipcode)
     day = omer_day(heb_date)
     if day:
-        return int(day) + int(times['now'][0] > times['sunset']) # boolean turns into an int
+        return int(day) + int(times['now'][0] > times['sunset']) # boolean turned into an int
     return -1
 
 def date_line(dateline):
@@ -76,29 +73,8 @@ def omer():
     dateline = form.get('dateline', '')
     try: day = int(day) + date_line(dateline)
     except ValueError: pass
-    
+
     return textforday(day, times).encode('utf-8')
-
-def application(environ, start_response):
-    form = cgi.FieldStorage(fp=environ['wsgi.input'], environ=environ)
-    zipcode = form.getvalue('zipcode', '94303')
-    day = form.getvalue('day', refine_day(zipcode))
-    dateline = form.getvalue('dateline', '')
-    try: day = int(day) + date_line(dateline)
-    except ValueError: pass
-
-    text = textforday(day, times).encode('utf-8')
-
-    status = '200 OK'
-    response_headers = [('Content-type', 'text/html; charset=UTF-8')]
-    start_response(status, response_headers)
-    return [text]
-
-# uncomment the following 2 lines for in-browser debugging, but be sure to comment
-# them out again when done since THEY ALLOW RUNNING OF ARBITRARY CODE FROM THE BROWSER!!
-
-#from paste.evalexception.middleware import EvalException # pip install paste
-#application = EvalException(application)
 
 if __name__ == '__main__':
     app.run(debug=True)
