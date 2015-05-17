@@ -1,1 +1,1 @@
-web: gunicorn omer.wsgi --log-file -
+web: gunicorn omer:app --log-file -
