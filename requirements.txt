@@ -3,4 +3,3 @@ BeautifulSoup
 ntplib
 feedparser
 python-dateutil
-gunicorn
