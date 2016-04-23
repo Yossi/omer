@@ -42,11 +42,11 @@ def chabad_org(zipcode):
     feed = 'http://www.chabad.org/tools/rss/zmanim.xml?z=%s&tDate=%s' % (zipcode, times['now'][0].strftime('%m/%d/%Y'))
     info = feedparser.parse(feed)
     for entry in info.entries:
-        if 'dawn' in entry.title:
+        if 'dawn' in entry.title.lower():
             times['dawn'] = parse(entry.title.split('-')[1])
-        if 'sunset' in entry.title:
+        if 'sunset' in entry.title.lower():
             times['sunset'] = parse(entry.title.split('-')[1])
-        if 'nightfall' in entry.title:
+        if 'nightfall' in entry.title.lower():
             times['nightfall'] = parse(entry.title.split('-')[1])
     return info.feed.hebrew_date, times
 
