@@ -33,31 +33,40 @@ def omer_day(heb_date):
     omer = int(day) + offset.get(month, 50) # 50 to make sure it is always out of range the rest of the year
     return omer if omer in range(1,50) else None
 
-def chabad_org(zipcode):
+def chabad_org(zipcode, date=''):
     ''' returns a tuple of the hebrew date for the majority of today's gregorian date (as the server sees it) and 
         the times of dawn, sunset, and nightfall for the given zipcode '''
     times = {'now': time_util.zip_time(zipcode),
-             'zipcode': zipcode}
+             'zipcode': zipcode,
+             'print' : bool(date)}
 
-    feed = 'http://www.chabad.org/tools/rss/zmanim.xml?z=%s&tDate=%s' % (zipcode, times['now'][0].strftime('%m/%d/%Y'))
+    if not date:
+        date = times['now'][0].strftime('%m/%d/%Y')
+
+    feed = 'http://www.chabad.org/tools/rss/zmanim.xml?z=%s&tDate=%s' % (zipcode, date)
     info = feedparser.parse(feed)
     for entry in info.entries:
-        if 'dawn' in entry.title:
+        if 'dawn' in entry.title.lower():
             times['dawn'] = parse(entry.title.split('-')[1])
-        if 'sunset' in entry.title:
+        if 'sunset' in entry.title.lower():
             times['sunset'] = parse(entry.title.split('-')[1])
-        if 'nightfall' in entry.title:
-            times['nightfall'] = parse(entry.title.split('-')[1])
+        if ('nightfall' in entry.title.lower() or 
+            'candle lighting after' in entry.title.lower() or
+            'holiday ends' in entry.title.lower()):
+            times['nightfall'] = parse(date + entry.title.split('-')[1])
     return info.feed.hebrew_date, times
 
 times = {}
-def refine_day(zipcode='94303'):
+def refine_day(zipcode='94303', date=''):
     ''' adjusts for before/after tzeit '''
     global times
-    heb_date, times = chabad_org(zipcode)
+    heb_date, times = chabad_org(zipcode, date)
     day = omer_day(heb_date)
     if day:
-        return int(day) + int(times['now'][0] > times['sunset']) # boolean turned into an int
+        if not times['print']:
+            return int(day) + int(times['now'][0] > times['sunset']) # boolean turned into an int
+        else:
+            return int(day) + 1
     return -1
 
 def date_line(dateline):
@@ -68,7 +77,8 @@ def date_line(dateline):
 def omer():
     form = request.args
     zipcode = form.get('zipcode') or '94303'
-    day = refine_day(zipcode)
+    date = form.get('date') or ''
+    day = refine_day(zipcode, date)
     day = form.get('day') or day 
     dateline = form.get('dateline', '')
     try: day = int(day) + date_line(dateline)
