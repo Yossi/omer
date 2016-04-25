@@ -1,1 +1,0 @@
-web: gunicorn omer:app --log-file -
