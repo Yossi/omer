@@ -21,7 +21,7 @@ days = [
     u"",
     u"אֶחָד",
     u"שְׁנַיִם",
-    u"שָׁבוּעַ אֶחָד"
+    u"שָׁבֽוּעַ אֶחָד"
 ]
 
 vov_hachibur = [ u"", u"וְ", u"וּ", u"וַ" ]
@@ -127,8 +127,8 @@ def yom(day):
     days = makeDaysString(remaining_days - 1)
 
     if day < 6:
-        return u"הַיּוֹם %sלָעוֹמֶר" % (total_days)
+        return u"הַיּוֹם %sלָעֽוֹמֶר" % (total_days)
     if not remaining_days:
-        return u"הַיּוֹם %s%sלָעוֹמֶר" % (total_days, weeks)
-    return u"הַיּוֹם %s%s<span class=bold>%s</span>%sלָעוֹמֶר" % (total_days, weeks, vov_hachibur[remaining_index[remaining_days]], days)
+        return u"הַיּוֹם %s%sלָעֽוֹמֶר" % (total_days, weeks)
+    return u"הַיּוֹם %s%s<span class=bold>%s</span>%sלָעֽוֹמֶר" % (total_days, weeks, vov_hachibur[remaining_index[remaining_days]], days)
 
