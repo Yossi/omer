@@ -52,7 +52,8 @@ def chabad_org(zipcode, date=''):
             times['sunset'] = parse(entry.title.split('-')[1])
         if ('nightfall' in entry.title.lower() or 
             'candle lighting after' in entry.title.lower() or
-            'holiday ends' in entry.title.lower()):
+            'holiday ends' in entry.title.lower() or
+            'shabbat ends' in entry.title.lower()):
             times['nightfall'] = parse(date + entry.title.split('-')[1])
     return info.feed.hebrew_date, times
 
