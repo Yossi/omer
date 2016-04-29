@@ -1,4 +1,4 @@
-#!/usr/bin/python
+﻿#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 from flask import render_template
@@ -8,8 +8,8 @@ def textforday(day, times=''):
     if day not in xrange(1,50):
         return render_template('error.html', day=day)
 
-    special = {15: u'ראש חודש אייר',
-               16: u'ראש חודש אייר',
+    special = {15: u'ראש חודש אייר יום א',
+               16: u'ראש חודש אייר יום ב',
                29: u'פסח שני‎',
                33: u'ל״ג בעומר',
                45: u'ראש חודש סיון'}
