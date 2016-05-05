@@ -11,7 +11,7 @@ import feedparser # pip install feedparser
 
 from hebrew import textforday
 import time_util # pip install ntplib BeautifulSoup
-reload(time_util) # I think what happens is sometimes time_util sometimes gets cached and gets stuck returning the same time forever. This fixes that.
+reload(time_util) # I think what happens is sometimes time_util gets cached and ends up returning the same time forever. This fixes that.
 
 from flask import Flask, request, send_from_directory # pip install flask
 app = Flask(__name__)
@@ -47,9 +47,9 @@ def chabad_org(zipcode, date=''):
     info = feedparser.parse(feed)
     for entry in info.entries:
         if 'dawn' in entry.title.lower():
-            times['dawn'] = parse(entry.title.split('-')[1])
+            times['dawn'] = parse(date + entry.title.split('-')[1])
         if 'sunset' in entry.title.lower():
-            times['sunset'] = parse(entry.title.split('-')[1])
+            times['sunset'] = parse(date + entry.title.split('-')[1])
         if ('nightfall' in entry.title.lower() or 
             'candle lighting after' in entry.title.lower() or
             'holiday ends' in entry.title.lower() or
