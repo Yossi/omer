@@ -65,7 +65,7 @@ u' יְבָרְכֵֽנוּ  אֱלהִים,  וְיִירְאוּ  אוֹתוֹ
     lamnatzeach[2] = yismechu[:i1] + u'<span id=red>' + yismechu[i1:i2] + u'</span>' + yismechu[i2:]
 
     l = u''.join(lamnatzeach).split(u'  ')
-    return u' '.join(l[:cday+3]) + u'\n<span class=bold>' + l[cday+3] + u'</span>\n' + u' '.join(l[cday+4:])
+    return u' '.join(l[:cday+3]) + u'\n<span class=bigbold>' + l[cday+3] + u'</span>\n' + u' '.join(l[cday+4:])
 
 def anabechoach(day):
     anabechoach = [ # double spacing here for HTML as well as the roshei teivos sets at the end of the line
