@@ -55,8 +55,7 @@ def zip_time1(zipcode):
 
 def zip_time2(zipcode):
     ''' fallback method. not quite as up-to-date as zip-info.com 
-        based off this database: http://www.boutell.com/zipcodes/ 
-        The author is a raging liberal, but the info is still good, if old'''
+        based off this database: http://www.boutell.com/zipcodes/ '''
     result = exec_sql('select timezone, dst from zips where zip = "%s"' % zipcode)
     if not result: return 'invalid zipcode'
     offset = result[0][0] + result[0][1] # offset + dst
@@ -74,10 +73,10 @@ def exec_sql(sql, db='zipcode2.sqlite'):
     return cur.fetchall()
 
 if __name__ == '__main__':
-    print zip_time2('00601') # -4
-    print zip_time2('47954') # -5
-    print zip_time2('79409') # -6
-    print zip_time2('88550') # -7
-    print zip_time2('94306') # -8
-    print zip_time2('99950') # -9
-    print zip_time2('96801') # -10
+    assert zip_time2('00601') == -4
+    assert zip_time2('47954') == -5
+    assert zip_time2('79409') == -6
+    assert zip_time2('88550') == -7
+    assert zip_time2('94306') == -8
+    assert zip_time2('99950') == -9
+    assert zip_time2('96801') == -10
