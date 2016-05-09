@@ -6,6 +6,9 @@
 import sys, os
 sys.path.append(os.path.dirname(__file__))
 
+import logging
+logging.basicConfig(stream=sys.stderr)
+
 from dateutil.parser import parse # pip install python-dateutil
 import feedparser # pip install feedparser
 
