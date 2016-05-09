@@ -12,27 +12,29 @@ def UTC():
 
 def zip_time(zipcode):
     ''' find the current time at the zipcode '''
-    # watch this...
     cheat = {'': -7,
-             '94303': -7,
-             '94306': -7}
-    if zipcode in cheat: 
+             '94303': -7}
+    if zipcode in cheat:
         return UTC() + datetime.timedelta(hours=cheat[zipcode]), zipcode
-    # ... and just like that we don't need to hit the web & use up one of our precious lookups, or worse, have to hit sqlite
-    # (in probably 99% of cases)
-
-    result = zip_time1(zipcode)
+    
+    result = zip_time_db(zipcode)
     if type(result) == datetime.datetime:
         return result, zipcode
 
-    result = zip_time2(zipcode)
+    result = zip_time_web(zipcode)
     if type(result) == datetime.datetime:
         return result, zipcode
 
     # oilpan
     return UTC + datetime.timedelta(hours=-7), 'unable to locate zipcode %s, defaulting to 94303' % zipcode
 
-def zip_time1(zipcode):    
+def zip_time_db(zipcode):
+    result = exec_sql('select timezone, dst from zips where zip = "%s"' % zipcode)
+    if not result: return 'zipcode not found'
+    offset = result[0][0] + result[0][1] # offset + dst
+    return UTC() + datetime.timedelta(hours=offset)
+
+def zip_time_web(zipcode):    
     url = 'http://www.zip-info.com/cgi-local/zipsrch.exe?tz=tz&zip='
     soup = BeautifulSoup(urllib2.urlopen(url+zipcode).read())
     if not soup('table'): # zipcode lookup limit exeeded. 30 lookups/day/ip
@@ -51,15 +53,8 @@ def zip_time1(zipcode):
                     'PST-2': -10 }
         daylight = result['dst'].startswith('Y')
         offset = offsets[result['timezone']] + daylight # sfira is always in DST if DST is observed
+        exec_sql('insert into zips values (%s, %s, %s)' % (zipcode, offsets[result['timezone']], int(daylight))) # stash result for next time
         return UTC() + datetime.timedelta(hours=offset)
-
-def zip_time2(zipcode):
-    ''' fallback method. not quite as up-to-date as zip-info.com 
-        based off this database: http://www.boutell.com/zipcodes/ '''
-    result = exec_sql('select timezone, dst from zips where zip = "%s"' % zipcode)
-    if not result: return 'invalid zipcode'
-    offset = result[0][0] + result[0][1] # offset + dst
-    return UTC() + datetime.timedelta(hours=offset)
 
 def exec_sql(sql, db='zipcode2.sqlite'):
     """Execute sql in sqlite database db.
@@ -73,10 +68,15 @@ def exec_sql(sql, db='zipcode2.sqlite'):
     return cur.fetchall()
 
 if __name__ == '__main__':
-    assert zip_time2('00601') == -4
-    assert zip_time2('47954') == -5
-    assert zip_time2('79409') == -6
-    assert zip_time2('88550') == -7
-    assert zip_time2('94306') == -8
-    assert zip_time2('99950') == -9
-    assert zip_time2('96801') == -10
+    assert zip_time('00601') == -4
+    assert zip_time('47954') == -5
+    assert zip_time('79409') == -6
+    assert zip_time('88550') == -7
+    assert zip_time('94306') == -8
+    assert zip_time('99950') == -9
+    assert zip_time('96801') == -10
+
+# code to create SQLite table
+#exec_sql('create table zips (zip text primary key not null, timezone int, dst int)')
+# secondary db of zips available here
+# http://www.boutell.com/zipcodes/
