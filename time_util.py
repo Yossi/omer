@@ -1,8 +1,65 @@
 import datetime
 import ntplib # pip install ntplib
 import urllib2
-import sqlite3 as lite
 from BeautifulSoup import BeautifulSoup # pip install BeautifulSoup
+from secrets import dbhost, db, dbuser, dbpasswd
+import pymysql # pip install pymysql
+pymysql.install_as_MySQLdb()
+import MySQLdb
+import logging
+
+import warnings
+warnings.filterwarnings('error', category=MySQLdb.Warning)
+
+class CM(object):
+    ''' connection manager '''
+    def __init__(self):
+        self.connection = None
+
+    def set_credentials(self, credentials):
+        self.credentials = credentials
+        self.close()
+
+    def get_conn(self):
+        if not self.connection:
+            logging.info('no db connection. creating...')
+            self.connection = MySQLdb.connect(**self.credentials)
+        return self.connection
+
+    def close(self):
+        if self.connection:
+            self.connection.close()
+            self.connection = None
+
+cm = CM()
+cm.set_credentials({'host': dbhost, 'db': db, 'user': dbuser, 'passwd': dbpasswd})
+
+def exec_sql(sql, retries=2):
+    try:
+        cur = None # needed in case get_conn() dies
+        db = cm.get_conn()
+        cur = db.cursor()
+        cur.execute(sql)
+        rows = [r for r in cur.fetchall()]
+        if not rows and not sql.strip().lower().startswith('select'):
+            rows = cur.rowcount
+        cur.close()
+        db.commit()
+        return rows
+
+    except MySQLdb.OperationalError as exc:
+        if cur:
+            cur.close()
+        cm.close()
+        if retries:
+            logging.warning('sql query failed, retrying')
+            return exec_sql(sql, retries-1)
+        else:
+            raise
+
+    except:
+        logging.error(sql)
+        raise
 
 def UTC():
     try:
@@ -29,7 +86,7 @@ def zip_time(zipcode):
     return UTC + datetime.timedelta(hours=-7), 'unable to locate zipcode %s, defaulting to 94303' % zipcode
 
 def zip_time_db(zipcode):
-    result = exec_sql('select timezone, dst from zips where zip = "%s"' % zipcode)
+    result = exec_sql('SELECT timezone, dst FROM zips WHERE zip = "%s"' % zipcode)
     if not result: return 'zipcode not found'
     offset = result[0][0] + result[0][1] # offset + dst
     return UTC() + datetime.timedelta(hours=offset)
@@ -53,19 +110,8 @@ def zip_time_web(zipcode):
                     'PST-2': -10 }
         daylight = result['dst'].startswith('Y')
         offset = offsets[result['timezone']] + daylight # sfira is always in DST if DST is observed
-        exec_sql('insert into zips values (%s, %s, %s)' % (zipcode, offsets[result['timezone']], int(daylight))) # stash result for next time
+        exec_sql('INSERT INTO zips VALUES (%s, %s, %s)' % (zipcode, offsets[result['timezone']], int(daylight))) # stash result for next time
         return UTC() + datetime.timedelta(hours=offset)
-
-def exec_sql(sql, db='zipcode2.sqlite'):
-    """Execute sql in sqlite database db.
-       Last statement's output gets returned."""
-    if sql.endswith(';'): sql = sql[:-1]
-    con = lite.connect(db, isolation_level=None)
-    con.row_factory = lite.Row
-    cur = con.cursor()
-    for statement in sql.split(';'):
-        cur.execute(sql)
-    return cur.fetchall()
 
 if __name__ == '__main__':
     assert zip_time('00601') == -4
@@ -76,7 +122,16 @@ if __name__ == '__main__':
     assert zip_time('99950') == -9
     assert zip_time('96801') == -10
 
-# code to create SQLite table
-#exec_sql('create table zips (zip text primary key not null, timezone int, dst int)')
+# code to create SQL table
+'''
+CREATE TABLE `zips`.`zips` (
+  `zip` INT NOT NULL COMMENT '',
+  `timezone` INT NULL COMMENT '',
+  `dst` INT NULL COMMENT '',
+  PRIMARY KEY (`zip`)  COMMENT '',
+  UNIQUE INDEX `zip_UNIQUE` (`zip` ASC)  COMMENT '');
+'''
+
+
 # secondary db of zips available here
 # http://www.boutell.com/zipcodes/
