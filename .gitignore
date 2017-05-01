@@ -57,3 +57,4 @@ docs/_build/
 venv/
 sandbox/
 secrets.py
+venv3/
