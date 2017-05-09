@@ -114,13 +114,13 @@ def zip_time_web(zipcode):
         return UTC() + datetime.timedelta(hours=offset)
 
 if __name__ == '__main__':
-    assert zip_time('00601') == -4
-    assert zip_time('47954') == -5
-    assert zip_time('79409') == -6
-    assert zip_time('88550') == -7
-    assert zip_time('94306') == -8
-    assert zip_time('99950') == -9
-    assert zip_time('96801') == -10
+    assert zip_time('00601')[0].hour == (UTC() + datetime.timedelta(hours=-4)).hour
+    assert zip_time('47954')[0].hour == (UTC() + datetime.timedelta(hours=-5)).hour + 1
+    assert zip_time('79409')[0].hour == (UTC() + datetime.timedelta(hours=-6)).hour + 1
+    assert zip_time('88550')[0].hour == (UTC() + datetime.timedelta(hours=-7)).hour + 1
+    assert zip_time('94306')[0].hour == (UTC() + datetime.timedelta(hours=-8)).hour + 1
+    assert zip_time('99950')[0].hour == (UTC() + datetime.timedelta(hours=-9)).hour + 1
+    assert zip_time('96801')[0].hour == (UTC() + datetime.timedelta(hours=-10)).hour
 
 # code to create SQL table
 '''
