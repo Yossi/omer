@@ -110,7 +110,7 @@ def zip_time_web(zipcode):
                     'PST-2': -10 }
         daylight = result['dst'].startswith('Y')
         offset = offsets[result['timezone']] + daylight # sfira is always in DST if DST is observed
-        exec_sql('INSERT INTO zips VALUES (%s, %s, %s)' % (zipcode, offsets[result['timezone']], int(daylight))) # stash result for next time
+        exec_sql('INSERT INTO zips VALUES ("%s", %s, %s)' % (zipcode, offsets[result['timezone']], int(daylight))) # stash result for next time
         return UTC() + datetime.timedelta(hours=offset)
 
 if __name__ == '__main__':
@@ -124,12 +124,13 @@ if __name__ == '__main__':
 
 # code to create SQL table
 '''
-CREATE TABLE `zips`.`zips` (
-  `zip` INT NOT NULL COMMENT '',
-  `timezone` INT NULL COMMENT '',
-  `dst` INT NULL COMMENT '',
-  PRIMARY KEY (`zip`)  COMMENT '',
-  UNIQUE INDEX `zip_UNIQUE` (`zip` ASC)  COMMENT '');
+CREATE TABLE `zips` (
+  `zip` varchar(5) NOT NULL,
+  `timezone` int(11) DEFAULT NULL,
+  `dst` int(11) DEFAULT NULL,
+  PRIMARY KEY (`zip`),
+  UNIQUE KEY `zip_UNIQUE` (`zip`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 '''
 
 # secondary db of zips available here
