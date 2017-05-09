@@ -91,7 +91,7 @@ def zip_time_db(zipcode):
     offset = result[0][0] + result[0][1] # offset + dst
     return UTC() + datetime.timedelta(hours=offset)
 
-def zip_time_web(zipcode):    
+def zip_time_web(zipcode):
     url = 'http://www.zip-info.com/cgi-local/zipsrch.exe?tz=tz&zip='
     soup = BeautifulSoup(urllib2.urlopen(url+zipcode).read())
     if not soup('table'): # zipcode lookup limit exeeded. 30 lookups/day/ip
@@ -131,7 +131,6 @@ CREATE TABLE `zips`.`zips` (
   PRIMARY KEY (`zip`)  COMMENT '',
   UNIQUE INDEX `zip_UNIQUE` (`zip` ASC)  COMMENT '');
 '''
-
 
 # secondary db of zips available here
 # http://www.boutell.com/zipcodes/
