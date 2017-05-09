@@ -83,7 +83,7 @@ def zip_time(zipcode):
         return result, zipcode
 
     # oilpan
-    return UTC + datetime.timedelta(hours=-7), 'unable to locate zipcode %s, defaulting to 94303' % zipcode
+    return UTC() + datetime.timedelta(hours=-7), 'unable to locate zipcode %s, defaulting to 94303' % zipcode
 
 def zip_time_db(zipcode):
     result = exec_sql('SELECT timezone, dst FROM zips WHERE zip = "%s"' % zipcode)
