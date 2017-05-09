@@ -58,3 +58,5 @@ venv/
 sandbox/
 secrets.py
 venv3/
+all year times/times.csv
+all year times/yeartimes.py
