@@ -2,7 +2,7 @@ import datetime
 import ntplib # pip install ntplib
 import urllib2
 from BeautifulSoup import BeautifulSoup # pip install BeautifulSoup
-from secrets import dbhost, db, dbuser, dbpasswd
+from secrets import dbconfig
 import pymysql # pip install pymysql
 pymysql.install_as_MySQLdb()
 import MySQLdb
@@ -32,7 +32,7 @@ class CM(object):
             self.connection = None
 
 cm = CM()
-cm.set_credentials({'host': dbhost, 'db': db, 'user': dbuser, 'passwd': dbpasswd})
+cm.set_credentials(dbconfig)
 
 def exec_sql(sql, retries=2):
     try:
