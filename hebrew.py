@@ -5,7 +5,7 @@ from flask import render_template
 from Yom import yom # creates just the "hayom...laomer" line
 
 def textforday(day, times=''):
-    if day not in xrange(1,50):
+    if day not in range(1,50):
         return render_template('error.html', day=day)
 
     special = {15: u"א' דראש חודש אייר",

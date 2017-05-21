@@ -1,7 +1,7 @@
 import datetime
 import ntplib # pip install ntplib
-import urllib2
-from BeautifulSoup import BeautifulSoup # pip install BeautifulSoup
+import requests # pip install requests
+from bs4 import BeautifulSoup # pip install BeautifulSoup4
 from secrets import dbconfig
 import pymysql # pip install pymysql
 pymysql.install_as_MySQLdb()
@@ -93,7 +93,7 @@ def zip_time_db(zipcode):
 
 def zip_time_web(zipcode):
     url = 'http://www.zip-info.com/cgi-local/zipsrch.exe?tz=tz&zip='
-    soup = BeautifulSoup(urllib2.urlopen(url+zipcode).read())
+    soup = BeautifulSoup(requests.get(url+zipcode).text)
     if not soup('table'): # zipcode lookup limit exeeded. 30 lookups/day/ip
         return 'zipcode lookup limit exeeded'
     result = [td.contents[0] for td in soup('table')[3].findAll('tr')[1]][2:]
