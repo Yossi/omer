@@ -55,6 +55,7 @@ docs/_build/
 
 
 venv/
+linuxvenv/
 sandbox/
 secrets.py
 venv3/
