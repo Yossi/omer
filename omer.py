@@ -4,6 +4,8 @@
 # pip install python-dateutil feedparser ntplib BeautifulSoup
 
 import sys, os
+sys.path.append(os.path.dirname(__file__))
+
 import logging
 logging.basicConfig(stream=sys.stderr)
 
@@ -12,7 +14,6 @@ import feedparser # pip install feedparser
 
 from hebrew import textforday
 import time_util # pip install ntplib BeautifulSoup
-from imp import reload
 reload(time_util) # I think what happens is sometimes time_util gets cached and ends up returning the same time forever. This fixes that.
 
 from flask import Flask, request, send_from_directory # pip install flask
