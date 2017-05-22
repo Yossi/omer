@@ -1,6 +1,7 @@
 flask
-BeautifulSoup
+BeautifulSoup4
 ntplib
 feedparser
 python-dateutil
 pymysql
+requests
