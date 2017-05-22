@@ -1,8 +1,8 @@
-flask
-BeautifulSoup4
-ntplib
-feedparser
-python-dateutil
-pymysql
-requests
 uwsgi
+python-dateutil
+feedparser
+flask
+ntplib
+requests
+BeautifulSoup4
+pymysql

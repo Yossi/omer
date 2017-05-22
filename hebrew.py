@@ -1,7 +1,7 @@
 ﻿#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
-from flask import render_template
+from flask import render_template # pip install flask
 from Yom import yom # creates just the "hayom...laomer" line
 
 def textforday(day, times=''):
