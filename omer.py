@@ -76,7 +76,7 @@ def date_line(dateline):
     results = {'east': 1, 'west': -1, '1': 1, '-1': -1}
     return results.get(dateline.lower(), 0)
 
-@app.route('/')
+@app.route('/omer')
 def omer():
     form = request.args
     zipcode = form.get('zipcode') or '94303'
@@ -94,4 +94,4 @@ def send_font(path):
     return send_from_directory('data/fonts', path)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
