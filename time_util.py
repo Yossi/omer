@@ -93,7 +93,7 @@ def zip_time_db(zipcode):
 
 def zip_time_web(zipcode):
     url = 'http://www.zip-info.com/cgi-local/zipsrch.exe?tz=tz&zip='
-    soup = BeautifulSoup(requests.get(url+zipcode).text)
+    soup = BeautifulSoup(requests.get(url+zipcode).text, 'html5lib')
     if not soup('table'): # zipcode lookup limit exeeded. 30 lookups/day/ip
         return 'zipcode lookup limit exeeded'
     result = [td.contents[0] for td in soup('table')[3].findAll('tr')[1]][2:]

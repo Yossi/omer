@@ -6,3 +6,4 @@ ntplib
 requests
 BeautifulSoup4
 pymysql
+html5lib
