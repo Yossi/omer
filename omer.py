@@ -93,5 +93,9 @@ def omer():
 def send_font(path):
     return send_from_directory('data/fonts', path)
 
+@app.route('/icon/<path:path>')
+def send_icon(path):
+    return send_from_directory('data/icon', path)
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

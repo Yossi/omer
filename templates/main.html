@@ -2,6 +2,35 @@
 <html>
   <head>
     <title>The day after day {{ day-1 }}</title>
+
+    <link id="favicon" rel="icon" type="image/png" href="/icon/omer_favicon.png" />
+    <script type="text/javascript" charset="utf-8">
+    (function () {
+    var canvas = document.createElement('canvas'),
+        ctx,
+        img = document.createElement('img'),
+        link = document.getElementById('favicon'),
+        day = '{{ day }}';
+
+    if (canvas.getContext) {
+      canvas.height = canvas.width = 16; // set the size
+      ctx = canvas.getContext('2d');
+      img.onload = function () { // once the image has loaded
+        ctx.drawImage(this, 0, 0);
+        ctx.font = 'bold 10px "helvetica", sans-serif';
+        ctx.fillStyle = '#F0EEDD';
+        if (day.length == 1) {
+            ctx.fillText(day, 5, 11);
+        } else {
+            ctx.fillText(day, 3, 11);
+        }
+        link.href = canvas.toDataURL('image/png');
+      };
+      img.src = '/icon/omer_favicon.png';
+    }
+
+    })();
+    </script>
     <style type="text/css">
       @import url(/fonts/TaameyFrankCLM/stylesheet.css);
       body
