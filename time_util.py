@@ -113,6 +113,11 @@ def zip_time_web(zipcode):
         exec_sql('INSERT INTO zips VALUES ("%s", %s, %s)' % (zipcode, offsets[result['timezone']], int(daylight))) # stash result for next time
         return UTC() + datetime.timedelta(hours=offset)
 
+def lat_lon_to_zip(lat, lon):
+    url = 'https://www.melissadata.com/lookups/latlngzip4.asp?lat={}&lng={}'.format(lat, lon)
+    soup = BeautifulSoup(requests.get(url).text, 'html5lib')
+    return soup('table')[4].findAll('tr')[4].find('b').text
+
 if __name__ == '__main__':
     assert zip_time('00601')[0].hour == (UTC() + datetime.timedelta(hours=-4)).hour
     assert zip_time('47954')[0].hour == (UTC() + datetime.timedelta(hours=-5)).hour + 1

@@ -79,7 +79,7 @@ def date_line(dateline):
 @app.route('/omer')
 def omer():
     form = request.args
-    zipcode = form.get('zipcode') or '94303'
+    zipcode = form.get('zipcode') or time_util.lat_lon_to_zip(form.get('lat'), form.get('lon')) or '94303'
     date = form.get('date') or ''
     day = refine_day(zipcode, date)
     day = form.get('day') or day 
