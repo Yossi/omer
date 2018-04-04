@@ -49,7 +49,7 @@ def textforday(day, times=''):
 
     output = {
               u'day': day,
-              u'hebnum': hebrew_numeral(day),
+              u'hebnum': hebrew_numeral(day, False),
               u'twilight': twilight,
               u'zipcode': times['zipcode'],
               u'special': special.get(day, ''),
