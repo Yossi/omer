@@ -114,10 +114,12 @@ def zip_time_web(zipcode):
         return UTC() + datetime.timedelta(hours=offset)
 
 def lat_lon_to_zip(lat, lon):
-    if not lat or not lon: return
-    url = 'https://www.melissadata.com/lookups/latlngzip4.asp?lat={}&lng={}'.format(lat, lon)
-    soup = BeautifulSoup(requests.get(url).text, 'html5lib')
-    return soup('table')[4].findAll('tr')[4].find('b').text.strip()
+    try:
+        url = 'https://www.melissadata.com/lookups/latlngzip4.asp?lat={}&lng={}'.format(lat, lon)
+        soup = BeautifulSoup(requests.get(url).text, 'html5lib')
+        return soup('table')[4].findAll('tr')[4].find('b').text.strip()
+    except IndexError:
+        return # not a valid US lat/lon
 
 if __name__ == '__main__':
     assert zip_time('00601')[0].hour == (UTC() + datetime.timedelta(hours=-4)).hour
