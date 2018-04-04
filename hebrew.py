@@ -3,6 +3,32 @@
 
 from flask import render_template # pip install flask
 from Yom import yom # creates just the "hayom...laomer" line
+import yaml
+
+hsn = yaml.load(open('data/hebrew-special-numbers/styles/default.yml', encoding="utf8"))
+
+def hebrew_numeral(val, gershayim=True):
+    def add_gershayim(s):
+        if len(s) == 1:
+            return s + hsn['separators']['geresh']
+        else:
+            return ''.join([s[:-1], hsn['separators']['gershayim'], s[-1:]])
+
+    if val in hsn['specials']:
+        retval = hsn['specials'][val]
+        return add_gershayim(retval) if gershayim else retval
+
+    parts = []
+    rest = str(val)
+    l = len(rest) - 1
+    for n, d in enumerate(rest):
+        digit = int(d)
+        if digit == 0: continue
+        power = 10 ** (l-n)
+        parts.append(hsn['numerals'][power * digit])
+    retval = ''.join(parts)
+
+    return add_gershayim(retval) if gershayim else retval
 
 def textforday(day, times=''):
     if day not in range(1,50):
@@ -23,6 +49,7 @@ def textforday(day, times=''):
 
     output = {
               u'day': day,
+              u'hebnum': hebrew_numeral(day),
               u'twilight': twilight,
               u'zipcode': times['zipcode'],
               u'special': special.get(day, ''),
