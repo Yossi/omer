@@ -59,4 +59,5 @@ linuxvenv*/
 sandbox/
 secrets.py
 venv3/
-all year times/*
+all year times/
+test/
