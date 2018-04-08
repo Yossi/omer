@@ -40,7 +40,7 @@
 
       var geoSuccess = function(position) {
         startPos = position;
-        document.location.href = 'https://yossi.no-ip.org/omer?lat=' + startPos.coords.latitude + '&lon=' + startPos.coords.longitude;
+        document.location.href = '/omer?lat=' + startPos.coords.latitude + '&lon=' + startPos.coords.longitude;
       };
 
       var geoError = function(error) {

@@ -35,7 +35,7 @@
       document.getElementById('lat').value = startPos.coords.latitude;
       document.getElementById('lon').value = startPos.coords.longitude;
       //document.getElementById('link').href = 'https://yossi.no-ip.org/omer?lat=' + startPos.coords.latitude + '&lon=' + startPos.coords.longitude;
-      //document.location.href = 'https://yossi.no-ip.org/omer?lat=' + startPos.coords.latitude + '&lon=' + startPos.coords.longitude;
+      //document.location.href = '/omer?lat=' + startPos.coords.latitude + '&lon=' + startPos.coords.longitude;
       console.log(position);
     };
     var geoError = function(error) {
@@ -67,7 +67,7 @@
     To save yourself from needing to enter your information every time, simply bookmark
     the resulting link. It will keep up-to-date on future visits.</p>
 
-    <form class="form" role="form" action="https://yossi.no-ip.org/omer" style=
+    <form class="form" role="form" action="/omer" style=
     "width:90%;margin-left:100">
       <div class="form-group">
         <label for="zip">Zip Code:</label> If you are not in a zipcode, do not rely on
