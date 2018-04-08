@@ -5,9 +5,9 @@ from flask import render_template # pip install flask
 from Yom import yom # creates just the "hayom...laomer" line
 import yaml
 
-hsn = yaml.load(open('data/hebrew-special-numbers/styles/default.yml', encoding="utf8"))
-
 def hebrew_numeral(val, gershayim=True):
+    hsn = yaml.load(open('data/hebrew-special-numbers/styles/default.yml', encoding="utf8"))
+
     def add_gershayim(s):
         if len(s) == 1:
             return s + hsn['separators']['geresh']
@@ -73,14 +73,14 @@ def lamnatzeach(day):
     lamnatzeach = [ # double spacing so that we can easily parse <span id=red> as a single item
 u'לַמְנַצֵּֽחַ  בִּנְגִינוֹת  מִזְמוֹר  שִׁיר׃  אֱלהִים  יְחָנֵּֽנוּ  וִיבָרְכֵֽנוּ,  יָאֵר  פָּנָיו  אִתָּֽנוּ  סֶלָה׃ ',
 u' לָדַֽעַת  בָּאָֽרֶץ  דַּרְכֶּֽךָ,  בְּכָל  גּוֹיִם  יְשׁוּעָתֶֽךָ׃  יוֹדֽוּךָ  עַמִּים  ׀  אֱלהִים,  יוֹדֽוּךָ  עַמִּים  כֻּלָּם׃ ',
-u' יִשְׂמְחוּ  וִירַנְּנוּ  לְאֻמִּים,  כִּי  תִשְׁפּוֹט  עַמִּים  מִישׁוֹר,  וּלְאֻמִּים  בָּאָֽרֶץ  תַּנְחֵם  סֶֽלָה׃  יוֹדֽוּךָ ',
+u' יִשְׂמְחוּ  וִירַנְּנוּ  לְאֻמִּים,  כִּי  תִשְׁפּ\u200cט  עַמִּים  מִישׁ\u200cר,  וּלְאֻמִּים  בָּאָֽרֶץ  תַּנְחֵם  סֶֽלָה׃  יוֹדֽוּךָ ',
 u' עַמִּים  ׀  אֱלהִים,  יוֹדֽוּךָ  עַמִּים  כֻּלָּם׃  אֶֽרֶץ  נָתְנָה  יְבוּלָהּ,  יְבָרְכֵֽנוּ  אֱלהִים  אֱלהֵֽינוּ׃ ',
 u' יְבָרְכֵֽנוּ  אֱלהִים,  וְיִירְאוּ  אוֹתוֹ  כָּל  אַפְסֵי  אָֽרֶץ׃']
 
     yismechu = lamnatzeach[2]
     numletters, i1, i2 = 0, None, None
     for c, char in enumerate(yismechu):
-        if char in u'אבגדהוזחטיךכלםמןנסעףפץצקרשת':
+        if char in u'אבגדהוזחטיךכלםמןנסעףפץצקרשת\u200c':
             numletters += 1
         if numletters == day and not i1:
             i1 = c
@@ -89,7 +89,9 @@ u' יְבָרְכֵֽנוּ  אֱלהִים,  וְיִירְאוּ  אוֹתוֹ
             while yismechu[i2-1] in u' ,׃':
                 i2 -= 1
 
-    lamnatzeach[2] = yismechu[:i1] + u'<span id=red>' + yismechu[i1:i2] + u'</span>' + yismechu[i2:]
+    letter = yismechu[i1:i2].replace('\u200c', u'וֹ')
+
+    lamnatzeach[2] = yismechu[:i1] + u'<span id=red>' + letter + u'</span>' + yismechu[i2:]
 
     l = u''.join(lamnatzeach).split(u'  ')
     return u' '.join(l[:cday+3]) + u'\n<span class=bigbold>' + l[cday+3] + u'</span>\n' + u' '.join(l[cday+4:])
