@@ -7,10 +7,10 @@
     <script type="text/javascript" charset="utf-8">
     (function () {
     var canvas = document.createElement('canvas'),
-        ctx,
-        img = document.createElement('img'),
-        link = document.getElementById('favicon'),
-        day = '{{ hebnum }}';
+      ctx,
+      img = document.createElement('img'),
+      link = document.getElementById('favicon'),
+      day = '{{ hebnum }}';
 
     if (canvas.getContext) {
       canvas.height = canvas.width = 16; // set the size
@@ -20,9 +20,9 @@
         ctx.font = 'bold 10px "helvetica", sans-serif';
         ctx.fillStyle = '#F0EEDD';
         if (day.length == 1) {
-            ctx.fillText(day, 5, 11);
+          ctx.fillText(day, 5, 11);
         } else {
-            ctx.fillText(day, 3, 11);
+          ctx.fillText(day, 3, 11);
         }
         link.href = canvas.toDataURL('image/png');
       };
@@ -30,7 +30,33 @@
     }
 
     })();
+
+    var getLocation = function() {
+      var startPos;
+      var geoOptions = {
+        maximumAge: 5 * 60 * 1000,
+        timeout: 10 * 1000
+      }
+
+      var geoSuccess = function(position) {
+        startPos = position;
+        document.location.href = 'https://yossi.no-ip.org/omer?lat=' + startPos.coords.latitude + '&lon=' + startPos.coords.longitude;
+      };
+
+      var geoError = function(error) {
+        console.log('Error occurred. Error code: ' + error.code);
+        // error.code can be:
+        //   0: unknown error
+        //   1: permission denied
+        //   2: position unavailable (error response from location provider)
+        //   3: timed out
+      };
+
+      navigator.geolocation.getCurrentPosition(geoSuccess, geoError, geoOptions);
+    };
+
     </script>
+
     <style type="text/css">
       @import url(/fonts/TaameyFrankCLM/stylesheet.css);
       body
@@ -66,7 +92,7 @@
     <table border=0>
       <tr>
         <td>
-          {{ tzeit }} - {{ zipcode }} {{ special }}
+          {{ tzeit }} - <a style="text-decoration: underline;" onClick=getLocation()>{{ zipcode }}</a> {{ special }}
           <hr />
         </td>
       </tr>
