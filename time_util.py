@@ -123,7 +123,8 @@ def lat_lon_to_zip(lat, lon):
     return lat_lon_to_zip_web(lat, lon)
 
 def lat_lon_to_zip_db(lat, lon):
-    return exec_sql('SELECT zip FROM latlons WHERE latlon = "{},{}";'.format(lat, lon))[0][0]
+    result = exec_sql('SELECT zip FROM latlons WHERE latlon = "{},{}";'.format(lat, lon))
+    if result: return result[0][0]
 
 def lat_lon_to_zip_web(lat, lon):
     try:
