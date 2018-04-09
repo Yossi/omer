@@ -86,7 +86,7 @@ def zip_time(zipcode):
     return UTC() + datetime.timedelta(hours=-7), 'unable to locate zipcode %s, defaulting to 94303' % zipcode
 
 def zip_time_db(zipcode):
-    result = exec_sql('SELECT timezone, dst FROM zips WHERE zip = "%s"' % zipcode)
+    result = exec_sql('SELECT timezone, dst FROM zips WHERE zip = "%s";' % zipcode)
     if not result: return 'zipcode not found'
     offset = result[0][0] + result[0][1] # offset + dst
     return UTC() + datetime.timedelta(hours=offset)
@@ -110,16 +110,30 @@ def zip_time_web(zipcode):
                     'PST-2': -10 }
         daylight = result['dst'].startswith('Y')
         offset = offsets[result['timezone']] + daylight # sfira is always in DST if DST is observed
-        exec_sql('INSERT INTO zips VALUES ("%s", %s, %s)' % (zipcode, offsets[result['timezone']], int(daylight))) # stash result for next time
+        exec_sql('INSERT INTO zips VALUES ("%s", %s, %s);' % (zipcode, offsets[result['timezone']], int(daylight))) # stash result for next time
         return UTC() + datetime.timedelta(hours=offset)
 
 def lat_lon_to_zip(lat, lon):
+    lat = lat[:lat.index('.')+4] # trim to just 3 digits past the decimal
+    lon = lon[:lon.index('.')+4] # good enough for zipcodes
+
+    zipcode = lat_lon_to_zip_db(lat, lon)
+    if zipcode: return zipcode
+
+    return lat_lon_to_zip_web(lat, lon)
+
+def lat_lon_to_zip_db(lat, lon):
+    return exec_sql('SELECT zip FROM latlons WHERE latlon = "{},{}";'.format(lat, lon))[0][0]
+
+def lat_lon_to_zip_web(lat, lon):
     try:
-        url = 'https://www.melissadata.com/lookups/latlngzip4.asp?lat={}&lng={}'.format(lat, lon)
+        url = 'https://www.melissadata.com/lookups/latlngzip4.asp?lat={}&lng={}'.format(lat, lon) # 30 lookups/day/ip here too
         soup = BeautifulSoup(requests.get(url).text, 'html5lib')
-        return soup('table')[4].findAll('tr')[4].find('b').text.strip()
+        zipcode = soup('table')[4].findAll('tr')[4].find('b').text.strip()
+        exec_sql('INSERT INTO latlons VALUES ("{},{}", {});'.format(lat, lon, zipcode))
+        return zipcode
     except IndexError:
-        return # not a valid US lat/lon
+        return # not a valid US lat/lon or daily lookup limit exceeded
 
 if __name__ == '__main__':
     assert zip_time('00601')[0].hour == (UTC() + datetime.timedelta(hours=-4)).hour
@@ -138,6 +152,13 @@ CREATE TABLE `zips` (
   `dst` int(11) DEFAULT NULL,
   PRIMARY KEY (`zip`),
   UNIQUE KEY `zip_UNIQUE` (`zip`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `latlons` (
+  `latlon` varchar(15) NOT NULL,
+  `zip` varchar(5) DEFAULT NULL,
+  PRIMARY KEY (`latlon`),
+  UNIQUE KEY `latlon_UNIQUE` (`latlon`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 '''
 
