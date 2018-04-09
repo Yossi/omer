@@ -114,6 +114,8 @@ def zip_time_web(zipcode):
         return UTC() + datetime.timedelta(hours=offset)
 
 def lat_lon_to_zip(lat, lon):
+    if not (lat and lon): return
+
     lat = lat[:lat.index('.')+4] # trim to just 3 digits past the decimal
     lon = lon[:lon.index('.')+4] # good enough for zipcodes
 
