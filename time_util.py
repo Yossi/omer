@@ -130,7 +130,7 @@ def lat_lon_to_zip_db(lat, lon):
 
 def lat_lon_to_zip_web(lat, lon):
     try:
-        url = 'https://www.melissadata.com/lookups/latlngzip4.asp?lat={}&lng={}'.format(lat, lon) # 30 lookups/day/ip here too
+        url = 'https://www.melissa.com/v2/lookups/latlngzip4/index?lat={}&lng={}'.format(lat, lon) # 30 lookups/day/ip here too
         soup = BeautifulSoup(requests.get(url).text, 'html5lib')
         zipcode = soup('table')[4].findAll('tr')[4].find('b').text.strip()
         exec_sql('INSERT INTO latlons VALUES ("{},{}", {});'.format(lat, lon, zipcode))
