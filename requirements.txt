@@ -8,3 +8,4 @@ BeautifulSoup4
 pymysql
 html5lib
 PyYAML
+pip
