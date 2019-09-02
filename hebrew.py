@@ -6,7 +6,7 @@ from Yom import yom # creates just the "hayom...laomer" line
 import yaml
 
 def hebrew_numeral(val, gershayim=True):
-    hsn = yaml.load(open('data/hebrew-special-numbers/styles/default.yml', encoding="utf8"))
+    hsn = yaml.load(open('data/hebrew-special-numbers/styles/default.yml', encoding="utf8"), Loader=yaml.SafeLoader)
 
     def add_gershayim(s):
         if len(s) == 1:

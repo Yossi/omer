@@ -61,3 +61,4 @@ secrets.py
 venv3/
 all year times/
 test/
+.vscode/
