@@ -130,7 +130,7 @@ def lat_lon_to_zip_web(lat, lon):
     try:
         url = 'https://www.melissa.com/v2/lookups/latlngzip4/index?lat={}&lng={}'.format(lat, lon) # 30 lookups/day/ip here too
         soup = BeautifulSoup(requests.get(url).text, 'html5lib')
-        zipcode = soup('table')[4].findAll('tr')[4].find('b').text.strip()
+        zipcode = [e.text.split() for e in soup('table')[0].findAll('tr') if 'Postal Code' in e.text][0][-1].partition('-')[0]
         exec_sql('INSERT INTO latlons VALUES ("{},{}", {});'.format(lat, lon, zipcode))
         return zipcode
     except IndexError:
