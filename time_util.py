@@ -128,13 +128,17 @@ def lat_lon_to_zip_db(lat, lon):
 
 def lat_lon_to_zip_web(lat, lon):
     try:
-        url = 'https://www.melissa.com/v2/lookups/latlngzip4/index?lat={}&lng={}'.format(lat, lon) # 30 lookups/day/ip here too
-        soup = BeautifulSoup(requests.get(url).text, 'html5lib')
-        zipcode = [e.text.split() for e in soup('table')[0].findAll('tr') if 'Postal Code' in e.text][0][-1].partition('-')[0]
+        from geopy.geocoders import Nominatim
+        geolocator = Nominatim(user_agent="omer reverse geocoder v1")
+        location = geolocator.reverse(f'{lat}, {lon}')
+        result = {key: location.raw['address'][key] for key in ('postcode', 'country_code')}
+        if result['country_code'] != 'us':
+            return # not a US lat/lon
+        zipcode = result['postcode']
         exec_sql('INSERT INTO latlons VALUES ("{},{}", {});'.format(lat, lon, zipcode))
         return zipcode
-    except IndexError:
-        return # not a valid US lat/lon or daily lookup limit exceeded
+    except KeyError:
+         return # unable to geocode
 
 if __name__ == '__main__':
     assert zip_time('00601')[0].hour == (UTC() + datetime.timedelta(hours=-4)).hour
