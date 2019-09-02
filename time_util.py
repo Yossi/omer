@@ -4,12 +4,10 @@ import requests # pip install requests
 from bs4 import BeautifulSoup # pip install BeautifulSoup4
 from secrets import dbconfig
 import pymysql # pip install pymysql
-pymysql.install_as_MySQLdb()
-import MySQLdb
 import logging
 
 import warnings
-warnings.filterwarnings('error', category=MySQLdb.Warning)
+warnings.filterwarnings('error', category=pymysql.Warning)
 
 class CM(object):
     ''' connection manager '''
@@ -23,7 +21,7 @@ class CM(object):
     def get_conn(self):
         if not self.connection:
             logging.info('no db connection. creating...')
-            self.connection = MySQLdb.connect(**self.credentials)
+            self.connection = pymysql.connect(**self.credentials)
         return self.connection
 
     def close(self):
@@ -47,7 +45,7 @@ def exec_sql(sql, retries=2):
         db.commit()
         return rows
 
-    except MySQLdb.OperationalError as exc:
+    except pymysql.OperationalError as exc:
         if cur:
             cur.close()
         cm.close()
