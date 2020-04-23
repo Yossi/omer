@@ -2,7 +2,6 @@ uwsgi
 python-dateutil
 feedparser
 flask
-ntplib
 requests
 BeautifulSoup4
 pymysql

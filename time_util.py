@@ -1,5 +1,4 @@
 import datetime
-import ntplib # pip install ntplib
 import requests # pip install requests
 from bs4 import BeautifulSoup # pip install BeautifulSoup4
 from secrets import dbconfig
@@ -60,10 +59,7 @@ def exec_sql(sql, retries=2):
         raise
 
 def UTC():
-    try:
-        return datetime.datetime.utcfromtimestamp(ntplib.NTPClient().request('ntp2.sbcglobal.net').tx_time)
-    except ntplib.NTPException:
-        return datetime.datetime.utcnow()
+    return datetime.datetime.utcnow()
 
 def zip_time(zipcode):
     ''' find the current time at the zipcode '''
@@ -71,7 +67,7 @@ def zip_time(zipcode):
              '94303': -7}
     if zipcode in cheat:
         return UTC() + datetime.timedelta(hours=cheat[zipcode]), zipcode
-    
+
     result = zip_time_db(zipcode)
     if type(result) == datetime.datetime:
         return result, zipcode
