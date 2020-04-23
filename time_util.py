@@ -1,62 +1,21 @@
 import datetime
 import requests # pip install requests
 from bs4 import BeautifulSoup # pip install BeautifulSoup4
-from secrets import dbconfig
-import pymysql # pip install pymysql
+import sqlite3 as lite
 import logging
 
-import warnings
-warnings.filterwarnings('error', category=pymysql.Warning)
-
-class CM(object):
-    ''' connection manager '''
-    def __init__(self):
-        self.connection = None
-
-    def set_credentials(self, credentials):
-        self.credentials = credentials
-        self.close()
-
-    def get_conn(self):
-        if not self.connection:
-            logging.info('no db connection. creating...')
-            self.connection = pymysql.connect(**self.credentials)
-        return self.connection
-
-    def close(self):
-        if self.connection:
-            self.connection.close()
-            self.connection = None
-
-cm = CM()
-cm.set_credentials(dbconfig)
-
-def exec_sql(sql, retries=2):
-    try:
-        cur = None # needed in case get_conn() dies
-        db = cm.get_conn()
-        cur = db.cursor()
-        cur.execute(sql)
-        rows = [r for r in cur.fetchall()]
-        if not rows and not sql.strip().lower().startswith('select'):
-            rows = cur.rowcount
-        cur.close()
-        db.commit()
-        return rows
-
-    except pymysql.OperationalError as exc:
-        if cur:
-            cur.close()
-        cm.close()
-        if retries:
-            logging.warning('sql query failed, retrying')
-            return exec_sql(sql, retries-1)
-        else:
-            raise
-
-    except:
-        logging.error(sql)
-        raise
+def exec_sql(sql, db='zips.db'):
+    """Execute sql in sqlite database db.
+       Last statement's output gets returned."""
+    if sql.endswith(';'): sql = sql[:-1]
+    con = lite.connect(db, isolation_level=None)
+    with con:
+        con.row_factory = lite.Row
+        cur = con.cursor()
+        for statement in sql.split(';'):
+            #print(statement)
+            cur.execute(statement+';')
+        return cur.fetchall()
 
 def UTC():
     return datetime.datetime.utcnow()
