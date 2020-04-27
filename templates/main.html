@@ -1,13 +1,14 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html>
   <head>
     <meta name="theme-color" content="#0084FF"/>
+    <meta charset="UTF-8"/>
 
     <title>The day after day {{ day-1 }}</title>
 
     <link id="favicon" rel="icon" type="image/png" href="/icon/omer_favicon.png" />
 
-    <script type="text/javascript" charset="utf-8">
+    <script type="text/javascript">
     (function () {
     var canvas = document.createElement('canvas'),
       ctx,
@@ -91,7 +92,7 @@
 
   </head>
   <body>
-    <table border=0>
+    <table>
       <tr>
         <td>
           {{ tzeit }} - <a style="text-decoration: underline;" onClick=getLocation()>{{ zipcode }}</a> {{ special }}
@@ -108,7 +109,7 @@
       </tr>
       <tr>
         <td>
-          <table border=0 style="float:right;">
+          <table style="float:right;">
             {{ anabechoach|safe }}
             <tr>
               <td colspan=2 class=center>
