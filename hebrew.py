@@ -1,7 +1,4 @@
-﻿#!/usr/bin/python
-# -*- coding: UTF-8 -*-
-
-from flask import render_template # pip install flask
+﻿from flask import render_template
 from Yom import yom # creates just the "hayom...laomer" line
 import yaml
 
@@ -30,7 +27,16 @@ def hebrew_numeral(val, gershayim=True):
 
     return add_gershayim(retval) if gershayim else retval
 
-def textforday(day, times=''):
+def textforday(kwargs):
+    '''
+        kwargs is a dict with keys: ['day_of_omer', 'print', 'zipcode', 'now', 'dawn', 'sunset', 'nightfall']
+        day_of_omer is an int
+        print is a bool
+        zipcode is a string
+        rest are datetime
+    '''
+    day = kwargs['day_of_omer'] # dont feel like renameing every instance below
+
     if day not in range(1,50):
         return render_template('error.html', day=day)
 
@@ -40,9 +46,9 @@ def textforday(day, times=''):
                33: u'ל״ג בעומר',
                45: u'ראש חודש סיון'}
 
-    tzeit = u'צאת הכוכבים׃' + times[u'nightfall'].strftime(u'%H:%M %Y-%m-%d')
-    twilight = u'background-color:#ddd;' if times['now'][0] < times[u'nightfall'] and times['now'][0] > times[u'sunset'] and not times['print'] else u''
-    bracha_style = u'color:#aaa;font-size:14px;' if times['now'][0] < times[u'sunset'] and times['now'][0] > times[u'dawn'] and not times['print'] else u'font-size:21px;'
+    tzeit = u'צאת הכוכבים׃' + kwargs[u'nightfall'].strftime(u'%H:%M %Y-%m-%d')
+    twilight = u'background-color:#ddd;' if kwargs['now'] < kwargs[u'nightfall'] and kwargs['now'] > kwargs[u'sunset'] and not kwargs['print'] else u''
+    bracha_style = u'color:#aaa;font-size:14px;' if kwargs['now'] < kwargs[u'sunset'] and kwargs['now'] > kwargs[u'dawn'] and not kwargs['print'] else u'font-size:21px;'
     bracha = u'בָּרוּךְ אַתָּה יְהֹוָה אֱלהֵֽינוּ מֶֽלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָֽׁנוּ בְּמִצְוֹתָיו, וְצִוָּֽנוּ עַל סְפִירַת הָעֽוֹמֶר'
     harachaman = u'הָרַחֲמָן הוּא יַחֲזִיר לָֽנוּ עֲבוֹדַת בֵּית הַמִּקְדָּשׁ לִמְקוֹמָהּ, בִּמְהֵרָה בְיָמֵֽינוּ אָמֵן סֶֽלָה'
     baruchshem = u'בָּרוּךְ שֵׁם כְּבוֹד מַלְכוּתוֹ לְעוֹלָם וָעֶד'
@@ -51,7 +57,7 @@ def textforday(day, times=''):
               u'day': day,
               u'hebnum': hebrew_numeral(day, False),
               u'twilight': twilight,
-              u'zipcode': times['zipcode'],
+              u'zipcode': kwargs['zipcode'],
               u'special': special.get(day, ''),
               u'bracha_style': bracha_style,
               u'bracha': bracha+u'׃',
@@ -91,7 +97,7 @@ u' יְבָרְכֵֽנוּ  אֱלהִים,  וְיִירְאוּ  אוֹתוֹ
 
     letter = yismechu[i1:i2]
     if '\u200c' in letter:
-        i1 -= 1 
+        i1 -= 1
         letter = letter.replace('\u200c', u'וֹ')
 
     lamnatzeach[2] = yismechu[:i1] + u'<span id=red>' + letter + u'</span>' + yismechu[i2:]

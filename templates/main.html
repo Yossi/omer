@@ -43,7 +43,7 @@
 
       var geoSuccess = function(position) {
         startPos = position;
-        document.location.href = '/omer?lat=' + startPos.coords.latitude + '&lon=' + startPos.coords.longitude;
+        document.location.href = '/omer?lat=' + startPos.coords.latitude + '&lng=' + startPos.coords.longitude;
       };
 
       var geoError = function(error) {
@@ -71,7 +71,7 @@
       #bracha { {{ bracha_style }} }
       #yom { font-size:22px; }
       .bold { font-weight:bold; }
-      .bigbold 
+      .bigbold
       {
         font-weight:bold;
         font-size:19px;

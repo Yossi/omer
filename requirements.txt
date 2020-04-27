@@ -1,11 +1,6 @@
-uwsgi
-python-dateutil
-feedparser
 flask
-requests
-BeautifulSoup4
-pymysql
-html5lib
 PyYAML
-geopy
-pip
+feedparser
+python-dateutil
+timezonefinder
+uszipcode
