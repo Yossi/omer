@@ -17,6 +17,10 @@ def omer():
 
     return textforday(args).encode('utf-8')
 
+@app.route('/omer.html')
+def send_index():
+    return send_from_directory('', 'omer.html')
+
 @app.route('/fonts/<path:path>')
 def send_font(path):
     return send_from_directory('data/fonts', path)
