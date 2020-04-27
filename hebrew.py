@@ -1,9 +1,11 @@
 ﻿from flask import render_template
 from Yom import yom # creates just the "hayom...laomer" line
 import yaml
+import os
+THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 
 def hebrew_numeral(val, gershayim=True):
-    hsn = yaml.load(open('data/hebrew-special-numbers/styles/default.yml', encoding="utf8"), Loader=yaml.SafeLoader)
+    hsn = yaml.load(open(os.path.join(THIS_FOLDER,'data/hebrew-special-numbers/styles/default.yml'), encoding="utf8"), Loader=yaml.SafeLoader)
 
     def add_gershayim(s):
         if len(s) == 1:
