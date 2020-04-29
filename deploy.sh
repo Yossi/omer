@@ -1,4 +1,3 @@
-set -x #echo on
 curl -L -O https://github.com/Yossi/omer/archive/pythonanywhere.zip
 unzip pythonanywhere.zip
 rm pythonanywhere.zip
