@@ -12,10 +12,10 @@ def omer():
     args['ll'] = form.get('lat'), form.get('lng')
     args['date'] = form.get('date') or ''
     args['dateline'] = form.get('dateline') or ''
-    args['passed_day'] = form.get('day') # override calculated day if user passes day explicitly
+    args['passed_day'] = form.get('day') # override calculated day if user passes a day explicitly
     process_args(args)
 
-    return textforday(args).encode('utf-8')
+    return textforday(args)
 
 @app.route('/omer.html')
 def send_index():

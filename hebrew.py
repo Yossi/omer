@@ -70,6 +70,7 @@ def textforday(kwargs):
               u'baruchshem': baruchshem+u'׃',
               u'ribonoshelolam': ribonoshelolam(day),
               u'tzeit': tzeit,
+              'debug': kwargs
              }
 
     return render_template('main.html', **output)
