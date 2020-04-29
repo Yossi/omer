@@ -2,5 +2,5 @@ Flask==1.1.2
 PyYAML==5.3.1
 feedparser==5.2.1
 python-dateutil==2.8.1
-timezonefinder==4.2.0
+timezonefinder==4.3.0
 uszipcode==0.2.4

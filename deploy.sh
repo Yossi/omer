@@ -10,3 +10,4 @@ source virtualenvwrapper.sh
 workon omer
 pip install -U -r requirements.txt
 pip list --outdated --format=columns
+rm -rf .cache
