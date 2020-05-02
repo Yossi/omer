@@ -10,3 +10,5 @@ workon omer
 pip install -U -r requirements.txt
 pip list --outdated --format=columns
 rm -rf .cache
+rm omer/.gitignore
+rm omer/requirements.txt
