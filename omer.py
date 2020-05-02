@@ -17,6 +17,7 @@ def omer():
 
     return textforday(args)
 
+@app.route('/')
 @app.route('/omer.html')
 def send_index():
     return send_from_directory('', 'omer.html')
