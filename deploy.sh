@@ -14,9 +14,8 @@ source virtualenvwrapper.sh
 workon omer
 echo Virtualenv omer activated
 pip install -U -r requirements.txt
-echo Attempting to list outdated packages
+echo Attempting to list outdated packages:
 pip list --outdated --format=columns
-echo Remove some junk
 rm -rf ../.cache
 rm .gitignore
 rm requirements.txt
