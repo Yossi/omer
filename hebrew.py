@@ -1,4 +1,4 @@
-from flask import render_template
+﻿from flask import render_template
 from Yom import yom # creates just the "hayom...laomer" line
 import yaml
 import os
@@ -42,39 +42,39 @@ def textforday(kwargs):
     if day not in range(1,50):
         return render_template('error.html', day=day)
 
-    special = {15: u"א' דראש חודש אייר",
-               16: u"ב' דראש חודש אייר",
-               29: u'פסח שני‎',
-               33: u'ל״ג בעומר',
-               45: u'ראש חודש סיון'}
+    special = {15: "א' דראש חודש אייר",
+               16: "ב' דראש חודש אייר",
+               29: 'פסח שני‎',
+               33: 'ל״ג בעומר',
+               45: 'ראש חודש סיון'}
 
-    tzeit = u'צאת הכוכבים׃' + kwargs[u'nightfall'].strftime(u'%H:%M %Y-%m-%d')
-    twilight = u'background-color:#ddd;' if kwargs['now'] < kwargs[u'nightfall'] and kwargs['now'] > kwargs[u'sunset'] and not kwargs['print'] else u''
-    bracha_style = u'color:#aaa;font-size:14px;' if kwargs['now'] < kwargs[u'sunset'] and kwargs['now'] > kwargs[u'dawn'] and not kwargs['print'] else u'font-size:21px;'
-    bracha = u'בָּרוּךְ אַתָּה יְהֹוָה אֱלהֵֽינוּ מֶֽלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָֽׁנוּ בְּמִצְוֹתָיו, וְצִוָּֽנוּ עַל סְפִירַת הָעֽוֹמֶר'
+    tzeit = 'צאת הכוכבים׃' + kwargs['nightfall'].strftime(u'%H:%M %Y-%m-%d')
+    twilight = 'background-color:#ddd;' if kwargs['now'] < kwargs['nightfall'] and kwargs['now'] > kwargs['sunset'] and not kwargs['print'] else ''
+    bracha_style = 'color:#aaa;font-size:14px;' if kwargs['now'] < kwargs['sunset'] and kwargs['now'] > kwargs['dawn'] and not kwargs['print'] else 'font-size:21px;'
+    bracha = 'בָּרוּךְ אַתָּה יְהֹוָה אֱלהֵֽינוּ מֶֽלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָֽׁנוּ בְּמִצְוֹתָיו, וְצִוָּֽנוּ עַל סְפִירַת הָעֽוֹמֶר'
     if kwargs['print']:
         bracha = bracha.replace(
             'יְהֹוָה אֱלהֵֽינוּ',
             'ה׳ אֱלקֵֽינוּ'
         )
-    harachaman = u'הָרַחֲמָן הוּא יַחֲזִיר לָֽנוּ עֲבוֹדַת בֵּית הַמִּקְדָּשׁ לִמְקוֹמָהּ, בִּמְהֵרָה בְיָמֵֽינוּ אָמֵן סֶֽלָה'
-    baruchshem = u'בָּרוּךְ שֵׁם כְּבוֹד מַלְכוּתוֹ לְעוֹלָם וָעֶד'
+    harachaman = 'הָרַחֲמָן הוּא יַחֲזִיר לָֽנוּ עֲבוֹדַת בֵּית הַמִּקְדָּשׁ לִמְקוֹמָהּ, בִּמְהֵרָה בְיָמֵֽינוּ אָמֵן סֶֽלָה'
+    baruchshem = 'בָּרוּךְ שֵׁם כְּבוֹד מַלְכוּתוֹ לְעוֹלָם וָעֶד'
 
     output = {
-              u'day': day,
-              u'hebnum': hebrew_numeral(day, False),
-              u'twilight': twilight,
-              u'zipcode': kwargs['zipcode'],
-              u'special': special.get(day, ''),
-              u'bracha_style': bracha_style,
-              u'bracha': bracha+u'׃',
-              u'yom': yom(day-1)+u'׃',
-              u'harachaman': harachaman+u'׃',
-              u'lamnatzeach': lamnatzeach(day, kwargs['print']),
-              u'anabechoach': anabechoach(day-1),
-              u'baruchshem': baruchshem+u'׃',
-              u'ribonoshelolam': ribonoshelolam(day, kwargs['print']),
-              u'tzeit': tzeit,
+              'day': day,
+              'hebnum': hebrew_numeral(day, False),
+              'twilight': twilight,
+              'zipcode': kwargs['zipcode'],
+              'special': special.get(day, ''),
+              'bracha_style': bracha_style,
+              'bracha': bracha+'׃',
+              'yom': yom(day-1)+'׃',
+              'harachaman': harachaman+'׃',
+              'lamnatzeach': lamnatzeach(day, kwargs['print']),
+              'anabechoach': anabechoach(day-1),
+              'baruchshem': baruchshem+'׃',
+              'ribonoshelolam': ribonoshelolam(day, kwargs['print']),
+              'tzeit': tzeit,
               'debug': kwargs
              }
 
@@ -85,11 +85,12 @@ def lamnatzeach(day, prnt=False):
     if day >= 16: cday = day + 1 # this is for dealing with
     if day >= 33: cday = day + 2 # the two commas in yismechu
     lamnatzeach = [ # double spacing so that we can easily parse <span id=red> as a single item
-u'לַמְנַצֵּֽחַ  בִּנְגִינוֹת  מִזְמוֹר  שִׁיר׃  אֱלהִים  יְחָנֵּֽנוּ  וִיבָרְכֵֽנוּ,  יָאֵר  פָּנָיו  אִתָּֽנוּ  סֶלָה׃ ',
-u' לָדַֽעַת  בָּאָֽרֶץ  דַּרְכֶּֽךָ,  בְּכָל  גּוֹיִם  יְשׁוּעָתֶֽךָ׃  יוֹדֽוּךָ  עַמִּים  ׀  אֱלהִים,  יוֹדֽוּךָ  עַמִּים  כֻּלָּם׃ ',
-u' יִשְׂמְחוּ  וִירַנְּנוּ  לְאֻמִּים,  כִּי  תִשְׁפֹּ\u200cט  עַמִּים  מִישֹׁ\u200cר,  וּלְאֻמִּים  בָּאָֽרֶץ  תַּנְחֵם  סֶֽלָה׃  יוֹדֽוּךָ ',
-u' עַמִּים  ׀  אֱלהִים,  יוֹדֽוּךָ  עַמִּים  כֻּלָּם׃  אֶֽרֶץ  נָתְנָה  יְבוּלָהּ,  יְבָרְכֵֽנוּ  אֱלהִים  אֱלהֵֽינוּ׃ ',
-u' יְבָרְכֵֽנוּ  אֱלהִים,  וְיִירְאוּ  אוֹתוֹ  כָּל  אַפְסֵי  אָֽרֶץ׃']
+        'לַמְנַצֵּֽחַ  בִּנְגִינוֹת  מִזְמוֹר  שִׁיר׃  אֱלהִים  יְחָנֵּֽנוּ  וִיבָרְכֵֽנוּ,  יָאֵר  פָּנָיו  אִתָּֽנוּ  סֶלָה׃ ',
+        ' לָדַֽעַת  בָּאָֽרֶץ  דַּרְכֶּֽךָ,  בְּכָל  גּוֹיִם  יְשׁוּעָתֶֽךָ׃  יוֹדֽוּךָ  עַמִּים  ׀  אֱלהִים,  יוֹדֽוּךָ  עַמִּים  כֻּלָּם׃ ',
+        ' יִשְׂמְחוּ  וִירַנְּנוּ  לְאֻמִּים,  כִּי  תִשְׁפֹּ\u200cט  עַמִּים  מִישֹׁ\u200cר,  וּלְאֻמִּים  בָּאָֽרֶץ  תַּנְחֵם  סֶֽלָה׃  יוֹדֽוּךָ ',
+        ' עַמִּים  ׀  אֱלהִים,  יוֹדֽוּךָ  עַמִּים  כֻּלָּם׃  אֶֽרֶץ  נָתְנָה  יְבוּלָהּ,  יְבָרְכֵֽנוּ  אֱלהִים  אֱלהֵֽינוּ׃ ',
+        ' יְבָרְכֵֽנוּ  אֱלהִים,  וְיִירְאוּ  אוֹתוֹ  כָּל  אַפְסֵי  אָֽרֶץ׃'
+    ]
 
     yismechu = lamnatzeach[2]
     numletters, i1, i2 = 0, None, None
@@ -106,9 +107,9 @@ u' יְבָרְכֵֽנוּ  אֱלהִים,  וְיִירְאוּ  אוֹתוֹ
     letter = yismechu[i1:i2]
     if '\u200c' in letter:
         i1 -= 1
-        letter = letter.replace('\u200c', u'וֹ')
+        letter = letter.replace('\u200c', 'וֹ')
 
-    lamnatzeach[2] = yismechu[:i1] + u'<span id=red>' + letter + u'</span>' + yismechu[i2:]
+    lamnatzeach[2] = yismechu[:i1] + '<span id=red>' + letter + '</span>' + yismechu[i2:]
 
     lamnatzeach = ''.join(lamnatzeach)
     if prnt:
@@ -119,43 +120,44 @@ u' יְבָרְכֵֽנוּ  אֱלהִים,  וְיִירְאוּ  אוֹתוֹ
             'אֱלהֵֽינוּ׃',
             'אֱלקֵֽינוּ'
         )
-    l = lamnatzeach.split(u'  ')
-    return u' '.join(l[:cday+3]) + u'\n<span class=bigbold>' + l[cday+3] + u'</span>\n' + u' '.join(l[cday+4:])
+    l = lamnatzeach.split('  ')
+    return ' '.join(l[:cday+3]) + '\n<span class=bigbold>' + l[cday+3] + '</span>\n' + ' '.join(l[cday+4:])
 
 def anabechoach(day):
     anabechoach = [ # double spacing here for HTML as well as the roshei teivos sets at the end of the line
-u'אָנָּא,  בְּכֹֽחַ  גְּדֻלַּת  יְמִינְךָ,  תַּתִּיר  צְרוּרָה  אב"ג ית"ץ',
-u'קַבֵּל  רִנַּת  עַמְּךָ,  שַׂגְּבֵֽנוּ,  טַהֲרֵֽנוּ,  נוֹרָא  קר"ע שט"ן',
-u'נָא  גִבּוֹר,  דּוֹרְשֵׁי  יִחוּדְךָ,  כְּבָבַת  שָׁמְרֵם  נג"ד יכ"ש',
-u'בָּרְכֵם,  טַהֲרֵם,  רַחֲמֵי  צִדְקָתְךָ  תָּמִיד  גָּמְלֵם  בט"ר צת"ג',
-u'חֲסִין  קָדוֹשׁ,  בְּרוֹב  טוּבְךָ  נַהֵל  עֲדָתֶֽךָ  חק"ב טנ"ע',
-u'יָחִיד,  גֵּאֶה,  לְעַמְּךָ  פְּנֵה,  זוֹכְרֵי  קְדֻשָּׁתֶֽךָ  יג"ל פז"ק',
-u'שַׁוְעָתֵֽנוּ  קַבֵּל,  וּשְׁמַע  צַעֲקָתֵֽנוּ,  יוֹדֵֽעַ  תַּעֲלוּמוֹת  שק"ו צי"ת']
+        'אָנָּא,  בְּכֹֽחַ  גְּדֻלַּת  יְמִינְךָ,  תַּתִּיר  צְרוּרָה  אב"ג ית"ץ',
+        'קַבֵּל  רִנַּת  עַמְּךָ,  שַׂגְּבֵֽנוּ,  טַהֲרֵֽנוּ,  נוֹרָא  קר"ע שט"ן',
+        'נָא  גִבּוֹר,  דּוֹרְשֵׁי  יִחוּדְךָ,  כְּבָבַת  שָׁמְרֵם  נג"ד יכ"ש',
+        'בָּרְכֵם,  טַהֲרֵם,  רַחֲמֵי  צִדְקָתְךָ  תָּמִיד  גָּמְלֵם  בט"ר צת"ג',
+        'חֲסִין  קָדוֹשׁ,  בְּרוֹב  טוּבְךָ  נַהֵל  עֲדָתֶֽךָ  חק"ב טנ"ע',
+        'יָחִיד,  גֵּאֶה,  לְעַמְּךָ  פְּנֵה,  זוֹכְרֵי  קְדֻשָּׁתֶֽךָ  יג"ל פז"ק',
+        'שַׁוְעָתֵֽנוּ  קַבֵּל,  וּשְׁמַע  צַעֲקָתֵֽנוּ,  יוֹדֵֽעַ  תַּעֲלוּמוֹת  שק"ו צי"ת'
+    ]
     week, day = divmod(day, 7)
     out = []
     for num, row in enumerate(anabechoach):
         if num != week:
-            out.append(u'\n<tr><td class=left>' + row.split(u'  ')[-1] +
-                       u'</td><td>.' + u'  '.join(row.split(u'  ')[:-1]) + u'</td></tr>')
+            out.append('\n<tr><td class=left>' + row.split('  ')[-1] +
+                       '</td><td>.' + '  '.join(row.split('  ')[:-1]) + '</td></tr>')
         else:
-            a = row.split(u'  ')
-            bolded_row = u'  '.join(a[:day]) + \
-            u'  <span class=bigbold>' + a[day] + u'</span>  ' + \
-            u'  '.join(a[day+1:])
-            b = bolded_row.strip().split(u'  ')
-            out.append(u'\n<tr><td class=left>' + b[-1] + u'</td><td>.' + u'  '.join(b[:-1]) + u'</td></tr>')
+            a = row.split('  ')
+            bolded_row = '  '.join(a[:day]) + \
+            '  <span class=bigbold>' + a[day] + '</span>  ' + \
+            '  '.join(a[day+1:])
+            b = bolded_row.strip().split('  ')
+            out.append('\n<tr><td class=left>' + b[-1] + '</td><td>.' + '  '.join(b[:-1]) + '</td></tr>')
     return u''.join(out)
 
 def ribonoshelolam(day, prnt=False):
     def sefiros(day):
-        sefiros = u'חֶֽסֶד גְּבוּרָה תִּפְאֶֽרֶת נֶֽצַח הוֹד יְסוֹד מַלְכוּת'.split()
+        sefiros = 'חֶֽסֶד גְּבוּרָה תִּפְאֶֽרֶת נֶֽצַח הוֹד יְסוֹד מַלְכוּת'.split()
         week, day = divmod(day-1, 7)
         if week in (1, 5):
-            s = u'י' + sefiros[week][2:] if week == 5 else sefiros[week]
-            return u'<span class=bigbold>' + sefiros[day] + u' שֶׁבִּ' + s + u'</span>'
+            s = 'י' + sefiros[week][2:] if week == 5 else sefiros[week]
+            return '<span class=bigbold>' + sefiros[day] + ' שֶׁבִּ' + s + '</span>'
         else:
-            s = u'ת' + sefiros[week][2:] if week == 2 else sefiros[week]
-            return u'<span class=bigbold>' + sefiros[day] + u' שֶׁבְּ' + s + u'</span>'
+            s = 'ת' + sefiros[week][2:] if week == 2 else sefiros[week]
+            return '<span class=bigbold>' + sefiros[day] + ' שֶׁבְּ' + s + '</span>'
 
     ribonoshelolam = [
         'רִבּוֹנוֹ שֶׁל עוֹלָם, אַתָּה צִוִּיתָֽנוּ עַל יְדֵי משֶׁה עַבְדֶּֽךָ לִסְפּוֹר סְפִירַת הָעֽוֹמֶר כְּדֵי לְטַהֲרֵֽנוּ מִקְלִפּוֹתֵֽינוּ וּמִטּוּמְאוֹתֵֽינוּ, כְּמוֹ שֶׁכָּתַֽבְתָּ בְּתוֹרָתֶֽךָ׃',
