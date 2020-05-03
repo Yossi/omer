@@ -48,9 +48,13 @@ def textforday(kwargs):
                33: 'ל״ג בעומר',
                45: 'ראש חודש סיון'}
 
-    tzeit = 'צאת הכוכבים׃' + kwargs['nightfall'].strftime(u'%H:%M %Y-%m-%d')
-    twilight = 'background-color:#ddd;' if kwargs['now'] < kwargs['nightfall'] and kwargs['now'] > kwargs['sunset'] and not kwargs['print'] else ''
-    bracha_style = 'color:#aaa;font-size:14px;' if kwargs['now'] < kwargs['sunset'] and kwargs['now'] > kwargs['dawn'] and not kwargs['print'] else 'font-size:21px;'
+    try:
+        tzeit = 'צאת הכוכבים׃' + kwargs['nightfall'].strftime(u'%H:%M %Y-%m-%d')
+        twilight = 'background-color:#ddd;' if kwargs['now'] < kwargs['nightfall'] and kwargs['now'] > kwargs['sunset'] and not kwargs['print'] else ''
+        bracha_style = 'color:#aaa;font-size:14px;' if kwargs['now'] < kwargs['sunset'] and kwargs['now'] > kwargs['dawn'] and not kwargs['print'] else 'font-size:21px;'
+    except KeyError:
+        tzeit, twilight, bracha_style = 'Zmanim error: Next day appears at noon', '', ''
+
     bracha = 'בָּרוּךְ אַתָּה יְהֹוָה אֱלהֵֽינוּ מֶֽלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָֽׁנוּ בְּמִצְוֹתָיו, וְצִוָּֽנוּ עַל סְפִירַת הָעֽוֹמֶר'
     if kwargs['print']:
         bracha = bracha.replace(

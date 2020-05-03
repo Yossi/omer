@@ -5,7 +5,7 @@ from dateutil.parser import parse
 from dateutil.tz import gettz
 from timezonefinder import TimezoneFinder
 from uszipcode import SearchEngine
-
+from pyluach import dates, hebrewcal
 
 def ll_to_zip(latitude, longitude):
     search = SearchEngine(simple_zipcode=True)
@@ -29,6 +29,10 @@ def date_line_offset(dateline):
     results = {'east': 1, 'west': -1, '1': 1, '-1': -1}
     return results.get(dateline.lower(), 0)
 
+def hebrew_date(greg_date):
+    heb = dates.HebrewDate.from_pydate(greg_date)
+    return f'{hebrewcal.Month(heb.year, heb.month).name} {heb.day}, {heb.year}'
+
 def chabad_org(zipcode, date=''):
     ''' returns a tuple of the hebrew date for the majority of today's gregorian date (as the server sees it) and
         the times of dawn, sunset, and nightfall for the given zipcode '''
@@ -39,17 +43,18 @@ def chabad_org(zipcode, date=''):
 
     feed = f"http://www.chabad.org/tools/rss/zmanim.xml?z={zipcode}&tDate={date.strftime('%m/%d/%Y')}"
     info = feedparser.parse(feed)
-    for entry in info.entries:
-        if 'dawn' in entry.title.lower():
-            times['dawn'] = parse(entry.title.split('-')[1], default=date).replace(tzinfo=gettz(ll_to_tz(*zip_to_ll(zipcode))))
-        if 'sunset' in entry.title.lower():
-            times['sunset'] = parse(entry.title.split('-')[1], default=date).replace(tzinfo=gettz(ll_to_tz(*zip_to_ll(zipcode))))
-        if ('nightfall' in entry.title.lower() or
-            'candle lighting after' in entry.title.lower() or
-            'holiday ends' in entry.title.lower() or
-            'shabbat ends' in entry.title.lower()):
-            times['nightfall'] = parse(entry.title.split('-')[1], default=date).replace(tzinfo=gettz(ll_to_tz(*zip_to_ll(zipcode))))
-    return info.feed.hebrew_date, times
+    if not info.get('bozo') and False:
+        for entry in info.entries:
+            if 'dawn' in entry.title.lower():
+                times['dawn'] = parse(entry.title.split('-')[1], default=date).replace(tzinfo=gettz(ll_to_tz(*zip_to_ll(zipcode))))
+            if 'sunset' in entry.title.lower():
+                times['sunset'] = parse(entry.title.split('-')[1], default=date).replace(tzinfo=gettz(ll_to_tz(*zip_to_ll(zipcode))))
+            if ('nightfall' in entry.title.lower() or
+                'candle lighting after' in entry.title.lower() or
+                'holiday ends' in entry.title.lower() or
+                'shabbat ends' in entry.title.lower()):
+                times['nightfall'] = parse(entry.title.split('-')[1], default=date).replace(tzinfo=gettz(ll_to_tz(*zip_to_ll(zipcode))))
+    return hebrew_date(date), times
 
 def omer_day(heb_date):
     ''' returns the day of the omer for the given hebrew date (i.e. answers the question "what omer do we count on the evening it becomes this hebrew date?")
@@ -89,7 +94,7 @@ def process_args(args):
 
         if day_of_omer:
             if not args['print']:
-                day_of_omer = int(day_of_omer) + int(args['now'] > args['sunset']) # boolean cast to an int
+                day_of_omer = int(day_of_omer) + int(args['now'] > args.get('sunset', args['now'].replace(hour=12, minute=00, second=00))) # boolean cast to an int
             else:
                 day_of_omer = int(day_of_omer) + 1
         else:
