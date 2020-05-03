@@ -105,7 +105,9 @@ if __name__ == '__main__':
     args = {
         'zipcode': '94303',
         'date': '',
-        'dateline': ''
+        'dateline': '',
+        'll': (None, None),
+        'passed_day': None
     }
     process_args(args)
     pprint(args)
