@@ -1,4 +1,4 @@
-﻿from flask import render_template
+from flask import render_template
 from Yom import yom # creates just the "hayom...laomer" line
 import yaml
 import os
@@ -52,6 +52,11 @@ def textforday(kwargs):
     twilight = u'background-color:#ddd;' if kwargs['now'] < kwargs[u'nightfall'] and kwargs['now'] > kwargs[u'sunset'] and not kwargs['print'] else u''
     bracha_style = u'color:#aaa;font-size:14px;' if kwargs['now'] < kwargs[u'sunset'] and kwargs['now'] > kwargs[u'dawn'] and not kwargs['print'] else u'font-size:21px;'
     bracha = u'בָּרוּךְ אַתָּה יְהֹוָה אֱלהֵֽינוּ מֶֽלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָֽׁנוּ בְּמִצְוֹתָיו, וְצִוָּֽנוּ עַל סְפִירַת הָעֽוֹמֶר'
+    if kwargs['print']:
+        bracha = bracha.replace(
+            'יְהֹוָה אֱלהֵֽינוּ',
+            'ה׳ אֱלקֵֽינוּ'
+        )
     harachaman = u'הָרַחֲמָן הוּא יַחֲזִיר לָֽנוּ עֲבוֹדַת בֵּית הַמִּקְדָּשׁ לִמְקוֹמָהּ, בִּמְהֵרָה בְיָמֵֽינוּ אָמֵן סֶֽלָה'
     baruchshem = u'בָּרוּךְ שֵׁם כְּבוֹד מַלְכוּתוֹ לְעוֹלָם וָעֶד'
 
@@ -65,17 +70,17 @@ def textforday(kwargs):
               u'bracha': bracha+u'׃',
               u'yom': yom(day-1)+u'׃',
               u'harachaman': harachaman+u'׃',
-              u'lamnatzeach': lamnatzeach(day),
+              u'lamnatzeach': lamnatzeach(day, kwargs['print']),
               u'anabechoach': anabechoach(day-1),
               u'baruchshem': baruchshem+u'׃',
-              u'ribonoshelolam': ribonoshelolam(day),
+              u'ribonoshelolam': ribonoshelolam(day, kwargs['print']),
               u'tzeit': tzeit,
               'debug': kwargs
              }
 
     return render_template('main.html', **output)
 
-def lamnatzeach(day):
+def lamnatzeach(day, prnt=False):
     cday = day
     if day >= 16: cday = day + 1 # this is for dealing with
     if day >= 33: cday = day + 2 # the two commas in yismechu
@@ -105,7 +110,16 @@ u' יְבָרְכֵֽנוּ  אֱלהִים,  וְיִירְאוּ  אוֹתוֹ
 
     lamnatzeach[2] = yismechu[:i1] + u'<span id=red>' + letter + u'</span>' + yismechu[i2:]
 
-    l = u''.join(lamnatzeach).split(u'  ')
+    lamnatzeach = ''.join(lamnatzeach)
+    if prnt:
+        lamnatzeach = lamnatzeach.replace(
+            'אֱלהִים',
+            'אֱלקִים'
+        ).replace(
+            'אֱלהֵֽינוּ׃',
+            'אֱלקֵֽינוּ'
+        )
+    l = lamnatzeach.split(u'  ')
     return u' '.join(l[:cday+3]) + u'\n<span class=bigbold>' + l[cday+3] + u'</span>\n' + u' '.join(l[cday+4:])
 
 def anabechoach(day):
@@ -132,7 +146,7 @@ u'שַׁוְעָתֵֽנוּ  קַבֵּל,  וּשְׁמַע  צַעֲקָתֵ�
             out.append(u'\n<tr><td class=left>' + b[-1] + u'</td><td>.' + u'  '.join(b[:-1]) + u'</td></tr>')
     return u''.join(out)
 
-def ribonoshelolam(day):
+def ribonoshelolam(day, prnt=False):
     def sefiros(day):
         sefiros = u'חֶֽסֶד גְּבוּרָה תִּפְאֶֽרֶת נֶֽצַח הוֹד יְסוֹד מַלְכוּת'.split()
         week, day = divmod(day-1, 7)
@@ -144,12 +158,17 @@ def ribonoshelolam(day):
             return u'<span class=bigbold>' + sefiros[day] + u' שֶׁבְּ' + s + u'</span>'
 
     ribonoshelolam = [
-u'רִבּוֹנוֹ שֶׁל עוֹלָם, אַתָּה צִוִּיתָֽנוּ עַל יְדֵי משֶׁה עַבְדֶּֽךָ לִסְפּוֹר סְפִירַת הָעֽוֹמֶר כְּדֵי לְטַהֲרֵֽנוּ מִקְלִפּוֹתֵֽינוּ וּמִטּוּמְאוֹתֵֽינוּ, כְּמוֹ שֶׁכָּתַֽבְתָּ בְּתוֹרָתֶֽךָ׃',
-u'וּסְפַרְתֶּם לָכֶם מִמָּחֳרַת הַשַּׁבָּת מִיוֹם הֲבִיאֲכֶם אֶת עֽוֹמֶר הַתְּנוּפָה שֶֽׁבַע שַׁבָּתוֹת תְּמִימוֹת תִּהְיֶֽינָה, עַד מִמָּחֳרַת הַשַּׁבָּת הַשְּׁבִיעִית תִּסְפְּרוּ חֲמִשִּׁים יוֹם,',
-u'כְּדֵי שֶׁיִּטָּהֲרוּ נַפְשׁוֹת עַמְּךָ יִשְׂרָאֵל מִזֻּהֲמָתָם, וּבְכֵן יְהִי רָצוֹן מִלְּפָנֶֽיךָ, יְהֹוָה אֱלהֵֽינוּ וֵאלהֵי אֲבוֹתֵֽינוּ,',
-u'שֶׁבִּזְכוּת סְפִירַת הָעֽוֹמֶר שֶׁסָּפַֽרְתִּי הַיּוֹם יְתֻקַּן מַה שֶׁפָּגַֽמְתִּי בִּסְפִירָה',
+        'רִבּוֹנוֹ שֶׁל עוֹלָם, אַתָּה צִוִּיתָֽנוּ עַל יְדֵי משֶׁה עַבְדֶּֽךָ לִסְפּוֹר סְפִירַת הָעֽוֹמֶר כְּדֵי לְטַהֲרֵֽנוּ מִקְלִפּוֹתֵֽינוּ וּמִטּוּמְאוֹתֵֽינוּ, כְּמוֹ שֶׁכָּתַֽבְתָּ בְּתוֹרָתֶֽךָ׃',
+        'וּסְפַרְתֶּם לָכֶם מִמָּחֳרַת הַשַּׁבָּת מִיוֹם הֲבִיאֲכֶם אֶת עֽוֹמֶר הַתְּנוּפָה שֶֽׁבַע שַׁבָּתוֹת תְּמִימוֹת תִּהְיֶֽינָה, עַד מִמָּחֳרַת הַשַּׁבָּת הַשְּׁבִיעִית תִּסְפְּרוּ חֲמִשִּׁים יוֹם,',
+        'כְּדֵי שֶׁיִּטָּהֲרוּ נַפְשׁוֹת עַמְּךָ יִשְׂרָאֵל מִזֻּהֲמָתָם, וּבְכֵן יְהִי רָצוֹן מִלְּפָנֶֽיךָ, יְהֹוָה אֱלהֵֽינוּ וֵאלהֵי אֲבוֹתֵֽינוּ,',
+        'שֶׁבִּזְכוּת סְפִירַת הָעֽוֹמֶר שֶׁסָּפַֽרְתִּי הַיּוֹם יְתֻקַּן מַה שֶׁפָּגַֽמְתִּי בִּסְפִירָה',
 
-u'וְאֶטָּהֵר וְאֶתְקַדֵּשׁ בִּקְדֻשָּׁה שֶׁל מַֽעְלָה,',
-u'וְעַל יְדֵי זֶה יֻשְׁפַּע שֶֽׁפַע רַב בְּכָל הָעוֹלָמוֹת וּלְתַקֵּן אֶת נַפְשׁוֹתֵֽינוּ וְרוּחוֹתֵֽינוּ וְנִשְׁמוֹתֵֽינוּ מִכָּל סִיג וּפְגַם וּלְטַהֲרֵֽנוּ וּלְקַדְּשֵֽׁנוּ בִּקְדֻשָׁתְךָ הָעֶלְיוֹנָה, אָמֵן סֶֽלָה׃']
-
-    return u' '.join(ribonoshelolam[:4] + [sefiros(day)] + ribonoshelolam[4:])
+        'וְאֶטָּהֵר וְאֶתְקַדֵּשׁ בִּקְדֻשָּׁה שֶׁל מַֽעְלָה,',
+        'וְעַל יְדֵי זֶה יֻשְׁפַּע שֶֽׁפַע רַב בְּכָל הָעוֹלָמוֹת וּלְתַקֵּן אֶת נַפְשׁוֹתֵֽינוּ וְרוּחוֹתֵֽינוּ וְנִשְׁמוֹתֵֽינוּ מִכָּל סִיג וּפְגַם וּלְטַהֲרֵֽנוּ וּלְקַדְּשֵֽׁנוּ בִּקְדֻשָׁתְךָ הָעֶלְיוֹנָה, אָמֵן סֶֽלָה׃'
+    ]
+    if prnt:
+        ribonoshelolam[2] = ribonoshelolam[2].replace(
+            'יְהֹוָה אֱלהֵֽינוּ וֵאלהֵי',
+            'ה׳ אֱלקֵֽינוּ וֵאלקֵי'
+        )
+    return ' '.join(ribonoshelolam[:4] + [sefiros(day)] + ribonoshelolam[4:])
