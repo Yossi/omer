@@ -43,7 +43,7 @@ def chabad_org(zipcode, date=''):
 
     feed = f"http://www.chabad.org/tools/rss/zmanim.xml?z={zipcode}&tDate={date.strftime('%m/%d/%Y')}"
     info = feedparser.parse(feed)
-    if not info.get('bozo') and False:
+    if not info.get('bozo'):
         for entry in info.entries:
             if 'dawn' in entry.title.lower():
                 times['dawn'] = parse(entry.title.split('-')[1], default=date).replace(tzinfo=gettz(ll_to_tz(*zip_to_ll(zipcode))))
