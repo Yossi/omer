@@ -22,12 +22,12 @@ def omer():
 def send_index():
     return send_from_directory('', 'omer.html')
 
-@app.route('/fonts/<path:path>')
-def send_font(path):
+@app.route('/fonts/<hash>/<path:path>')
+def send_font(hash, path):
     return send_from_directory('data/fonts', path)
 
-@app.route('/icon/<path:path>')
-def send_icon(path):
+@app.route('/icon/<hash>/<path:path>')
+def send_icon(hash, path):
     return send_from_directory('data/icon', path)
 
 if __name__ == '__main__':

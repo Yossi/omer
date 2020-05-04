@@ -8,7 +8,7 @@
 
     <title>The day after day {{ day-1 }}</title>
 
-    <link id="favicon" rel="icon" type="image/png" href="/icon/omer_favicon.png">
+    <link id="favicon" rel="icon" type="image/png" href="/icon/{{ hash }}/omer_favicon.png">
 
     <script type="text/javascript">
     (function () {
@@ -32,7 +32,7 @@
         }
         link.href = canvas.toDataURL('image/png');
       };
-      img.src = '/icon/omer_favicon.png';
+      img.src = '/icon/{{ hash }}/omer_favicon.png';
     }
 
     })();
@@ -63,7 +63,7 @@
     </script>
 
     <style type="text/css">
-      @import url(/fonts/TaameyFrankCLM/stylesheet.css);
+      @import url(/fonts/{{ hash }}/TaameyFrankCLM/stylesheet.css);
       body
       {
         font-family:'TaameyFrankCLM';
@@ -128,6 +128,6 @@
         </td>
       </tr>
     </table>
-    <!--{{ debug }}-->
+    <!--{{ debug|safe }}-->
   </body>
 </html>

@@ -31,10 +31,11 @@ def hebrew_numeral(val, gershayim=True):
 
 def textforday(kwargs):
     '''
-        kwargs is a dict with keys: ['day_of_omer', 'print', 'zipcode', 'now', 'dawn', 'sunset', 'nightfall']
+        kwargs is a dict with keys: ['day_of_omer', 'print', 'zipcode', 'hash', 'now', 'dawn', 'sunset', 'nightfall']
         day_of_omer is an int
         print is a bool
         zipcode is a string
+        hash is a string
         rest are datetime
     '''
     day = kwargs['day_of_omer'] # dont feel like renameing every instance below
@@ -79,6 +80,7 @@ def textforday(kwargs):
               'baruchshem': baruchshem+'׃',
               'ribonoshelolam': ribonoshelolam(day, kwargs['print']),
               'tzeit': tzeit,
+              'hash': kwargs.get('hash', '_'),
               'debug': kwargs
              }
 

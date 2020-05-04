@@ -2,6 +2,7 @@ echo Downloading https://github.com/Yossi/omer/archive/pythonanywhere.zip
 curl -L -O https://github.com/Yossi/omer/archive/pythonanywhere.zip
 echo Unzipping...
 unzip pythonanywhere.zip
+unzip -z pythonanywhere.zip | sed -n 2p > omer-pythonanywhere/version.hash
 rm pythonanywhere.zip
 echo Deleted pythonanywhere.zip
 rm -rf omer

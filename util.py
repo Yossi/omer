@@ -104,6 +104,8 @@ def process_args(args):
 
     args['day_of_omer'] = day_of_omer
 
+    with open('version.hash') as fp:
+        args['hash'] = fp.readline().strip()
 
 if __name__ == '__main__':
     from pprint import pprint

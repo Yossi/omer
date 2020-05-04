@@ -62,3 +62,5 @@ venv3/
 all year times/
 test/
 .vscode/
+
+version.hash
