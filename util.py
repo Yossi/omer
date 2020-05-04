@@ -1,4 +1,5 @@
 from datetime import datetime
+import os
 
 import feedparser
 from dateutil.parser import parse
@@ -6,6 +7,8 @@ from dateutil.tz import gettz
 from timezonefinder import TimezoneFinder
 from uszipcode import SearchEngine
 from pyluach import dates, hebrewcal
+
+THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 
 def ll_to_zip(latitude, longitude):
     search = SearchEngine(simple_zipcode=True)
@@ -104,7 +107,7 @@ def process_args(args):
 
     args['day_of_omer'] = day_of_omer
 
-    with open('version.hash') as fp:
+    with open(os.path.join(THIS_FOLDER, 'version.hash')) as fp:
         args['hash'] = fp.readline().strip()
 
 if __name__ == '__main__':
