@@ -20,4 +20,5 @@ pip list --outdated --format=columns
 rm -rf ../.cache
 rm .gitignore
 rm requirements.txt
+rm -rf omer/.github/
 echo Done. Now go reload site from the Web tab.
