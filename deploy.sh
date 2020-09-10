@@ -18,7 +18,7 @@ pip install -U -r requirements.txt
 echo Attempting to list outdated packages:
 pip list --outdated --format=columns
 rm -rf ../.cache
+rm -rf .github/
 rm .gitignore
 rm requirements.txt
-rm -rf omer/.github/
 echo Done. Now go reload site from the Web tab.
