@@ -32,13 +32,14 @@ def hebrew_numeral(val, gershayim=True):
 def textforday(kwargs):
     '''
         kwargs is a dict with keys: ['day_of_omer', 'print', 'zipcode', 'hash', 'now', 'dawn', 'sunset', 'nightfall']
-        day_of_omer is an int
-        print is a bool
-        zipcode is a string
-        hash is a string
-        rest are datetime
+        where:
+            day_of_omer is an int
+            print is a bool
+            zipcode is a string
+            hash is a string
+            rest are datetime
     '''
-    day = kwargs['day_of_omer'] # dont feel like renameing every instance below
+    day = kwargs['day_of_omer'] # dont feel like renaming every instance below
 
     if day not in range(1,50):
         return render_template('error.html', day=day)
