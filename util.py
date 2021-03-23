@@ -74,7 +74,7 @@ def omer_day(heb_date):
               'Sivan': 44}
 
     omer = int(day) + offset.get(month, 50) # 50 to make sure it is always out of range the rest of the year
-    return omer if omer in range(1, 50) else None
+    return omer if omer in range(0, 50) else 0
 
 def process_args(args):
     if all(args['ll']):
@@ -95,7 +95,7 @@ def process_args(args):
         try: day_of_omer = int(day_of_omer) + date_line_offset(args['dateline'])
         except TypeError: pass
 
-        if day_of_omer:
+        if day_of_omer >= 0:
             if not args['print']:
                 day_of_omer = int(day_of_omer) + int(args['now'] > args.get('sunset', args['now'].replace(hour=12, minute=00, second=00))) # boolean cast to an int
             else:
