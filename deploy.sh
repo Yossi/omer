@@ -16,7 +16,7 @@ workon omer
 echo Virtualenv omer activated
 pip install -U -r requirements.txt
 echo Attempting to list outdated packages:
-pip list --outdated --format=columns
+pip list --outdated
 rm -rf ../.cache
 rm -rf .github/
 rm .gitignore
