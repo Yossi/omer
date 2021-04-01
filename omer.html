@@ -107,11 +107,11 @@
 
     <form class="form" action="/omer" style="width:90%;margin-left:100">
       <div class="form-group">
-        <label for="zip">Zip Code:</label> If you are not in a zipcode, do not rely on the times or days that are automatically calculated. (blank defaults to Palo Alto zip code, that is 94303)<br />
+        <label for="zip">Zip Code:</label> If you are not in a zip code, do not rely on the times or days that are automatically calculated. (blank defaults to 94303, the Chabad of Palo Alto zip code)<br />
         <input type="text" name="zipcode" maxlength="5" size="2" pattern="[1-9][0-9]{0,4}" id="zip" class="form-control" placeholder="5 Digit Zip Code" />
       </div>
       <div class="form-group">
-        <label for="latlon">Lat/Lon:</label> Instead of zipcode, you can enter your coordinates here (must still be somewhere that has a zipcode).<br />
+        <label for="latlon">Lat/Lon:</label> Instead of zip code, you can enter your coordinates here (must still be somewhere that has a zip code).<br />
         <input type="text" name="lat" id="lat" class="form-control" placeholder="Lattitude" />
         <input type="text" name="lng" id="lng" class="form-control" placeholder="Longtitude" />
         <input type="button" name="getloc" id="latlon" class="form-control" value="Current Location" onClick=getLocation() />
