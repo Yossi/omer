@@ -55,7 +55,7 @@ def textforday(kwargs):
         twilight = 'background-color:#ddd;' if kwargs['now'] < kwargs['nightfall'] and kwargs['now'] > kwargs['sunset'] and not kwargs['print'] else ''
         bracha_style = 'color:#aaa;font-size:14px;' if kwargs['now'] < kwargs['sunset'] and kwargs['now'] > kwargs['dawn'] and not kwargs['print'] else 'font-size:21px;'
     except KeyError:
-        tzeit, twilight, bracha_style = 'Zmanim error: Next day appears at noon', '', ''
+        tzeit, twilight, bracha_style = 'Zmanim or zipcode error: Next day appears at noon', '', ''
 
     bracha = 'בָּרוּךְ אַתָּה יְהֹוָה אֱלהֵֽינוּ מֶֽלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָֽׁנוּ בְּמִצְוֹתָיו, וְצִוָּֽנוּ עַל סְפִירַת הָעֽוֹמֶר'
     if kwargs['print']:

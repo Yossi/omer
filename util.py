@@ -17,6 +17,8 @@ def ll_to_zip(latitude, longitude):
 def zip_to_ll(zipcode):
     search = SearchEngine(simple_zipcode=True)
     result = search.by_zipcode(zipcode)
+    if not all((result.lat, result.lng)): # invalid zipcode
+        result = search.by_zipcode('94303')
     return result.lat, result.lng
 
 def ll_to_tz(latitude, longitude):
