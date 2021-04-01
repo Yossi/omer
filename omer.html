@@ -25,33 +25,32 @@
 
   <script>
 
-  var getLocation = function() {
-    var startPos;
-    var geoOptions = {
-      maximumAge: 5 * 60 * 1000,
-      timeout: 10 * 1000
-    }
+    var getLocation = function() {
+      var startPos;
+      var geoOptions = {
+        maximumAge: 5 * 60 * 1000,
+        timeout: 10 * 1000
+      }
 
-    var geoSuccess = function(position) {
-      startPos = position;
-      document.getElementById('lat').value = startPos.coords.latitude;
-      document.getElementById('lng').value = startPos.coords.longitude;
-      //document.getElementById('link').href = '/omer?lat=' + startPos.coords.latitude + '&lon=' + startPos.coords.longitude;
-      //document.location.href = '/omer?lat=' + startPos.coords.latitude + '&lon=' + startPos.coords.longitude;
-      console.log(position);
-    };
-    var geoError = function(error) {
-      console.log('Error occurred. Error code: ' + error.code);
-      // error.code can be:
-      //   0: unknown error
-      //   1: permission denied
-      //   2: position unavailable (error response from location provider)
-      //   3: timed out
-    };
+      var geoSuccess = function(position) {
+        startPos = position;
+        document.getElementById('lat').value = startPos.coords.latitude;
+        document.getElementById('lng').value = startPos.coords.longitude;
+        //document.getElementById('link').href = '/omer?lat=' + startPos.coords.latitude + '&lon=' + startPos.coords.longitude;
+        //document.location.href = '/omer?lat=' + startPos.coords.latitude + '&lon=' + startPos.coords.longitude;
+        console.log(position);
+      };
+      var geoError = function(error) {
+        console.log('Error occurred. Error code: ' + error.code);
+        // error.code can be:
+        //   0: unknown error
+        //   1: permission denied
+        //   2: position unavailable (error response from location provider)
+        //   3: timed out
+      };
 
     navigator.geolocation.getCurrentPosition(geoSuccess, geoError, geoOptions);
-  };
-
+    };
   </script>
 </head>
 
@@ -69,8 +68,7 @@
     To save yourself from needing to enter your information every time, simply bookmark
     the resulting link. It will keep up-to-date on future visits.</p>
 
-    <form class="form" action="/omer" style=
-    "width:90%;margin-left:100">
+    <form class="form" action="/omer" style="width:90%;margin-left:100">
       <div class="form-group">
         <label for="zip">Zip Code:</label> If you are not in a zipcode, do not rely on the times or days that are automatically calculated. (blank defaults to Palo Alto zip code, that is 94303)<br />
         <input type="text" name="zipcode" maxlength="5" size="2" pattern="[1-9][0-9]{0,4}" id="zip" class="form-control" placeholder="5 Digit Zip Code" />
