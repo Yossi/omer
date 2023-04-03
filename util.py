@@ -11,11 +11,11 @@ from pyluach import dates, hebrewcal
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 
 def ll_to_zip(latitude, longitude):
-    search = SearchEngine(simple_zipcode=True)
+    search = SearchEngine()
     return search.by_coordinates(float(latitude), float(longitude), radius=50, returns=1)[0].zipcode
 
 def zip_to_ll(zipcode):
-    search = SearchEngine(simple_zipcode=True)
+    search = SearchEngine()
     result = search.by_zipcode(zipcode)
     if not all((result.lat, result.lng)): # invalid zipcode
         result = search.by_zipcode('94303')
@@ -36,7 +36,7 @@ def date_line_offset(dateline):
 
 def hebrew_date(greg_date):
     heb = dates.HebrewDate.from_pydate(greg_date)
-    return f'{hebrewcal.Month(heb.year, heb.month).name} {heb.day}, {heb.year}'
+    return f'{hebrewcal.Month(heb.year, heb.month).month_name()} {heb.day}, {heb.year}'
 
 def chabad_org(zipcode, date=''):
     ''' returns a tuple of the hebrew date for the majority of today's gregorian date (as the server sees it) and
