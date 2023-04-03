@@ -14,7 +14,7 @@ cd omer
 source virtualenvwrapper.sh
 workon omer
 echo Virtualenv omer activated
-pip install -U -r requirements.txt
+pip install -U --upgrade-strategy only-if-needed -r requirements.txt
 echo Attempting to list outdated packages:
 pip list --outdated
 rm -rf ../.cache
