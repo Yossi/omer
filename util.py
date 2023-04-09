@@ -11,8 +11,8 @@ from pyluach import dates, hebrewcal
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 
 def ll_to_zip(latitude, longitude):
-    search = SearchEngine()
-    return search.by_coordinates(float(latitude), float(longitude), radius=50, returns=1)[0].zipcode
+    with SearchEngine() as search:
+        return search.by_coordinates(float(latitude), float(longitude), radius=50, returns=1)[0].zipcode
 
 def zip_to_ll(zipcode):
     search = SearchEngine()
