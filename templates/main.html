@@ -46,7 +46,7 @@
 
       var geoSuccess = function(position) {
         startPos = position;
-        document.location.href = '/omer?lat=' + startPos.coords.latitude + '&lng=' + startPos.coords.longitude;
+        document.location.href = '/omer?lat=' + startPos.coords.latitude.toFixed(3) + '&lng=' + startPos.coords.longitude.toFixed(3);
       };
 
       var geoError = function(error) {

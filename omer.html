@@ -71,8 +71,8 @@
 
       var geoSuccess = function(position) {
         startPos = position;
-        document.getElementById('lat').value = startPos.coords.latitude;
-        document.getElementById('lng').value = startPos.coords.longitude;
+        document.getElementById('lat').value = startPos.coords.latitude.toFixed(3);
+        document.getElementById('lng').value = startPos.coords.longitude.toFixed(3);
         //document.getElementById('link').href = '/omer?lat=' + startPos.coords.latitude + '&lon=' + startPos.coords.longitude;
         //document.location.href = '/omer?lat=' + startPos.coords.latitude + '&lon=' + startPos.coords.longitude;
         console.log(position);
