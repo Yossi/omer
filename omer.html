@@ -5,6 +5,7 @@
 <head>
   <meta name="theme-color" content="#0084FF"/>
   <meta charset="UTF-8" />
+  <meta name="description" content="sefiras ha'omer">
 
   <title>Omer Start Page</title>
 
@@ -120,19 +121,18 @@
       <div class="content">
         <div class="form-group">
           <div class="row">
-              Did you cross the International dateline? (Not everyone holds of this modifier. Consult your local orthodox Rabbi.)<br />
-              <div class="col-xs-12 col-sm-10 col-sm-push-1"><input type="range" min="-1" max="1" step="1" value="0" name="dateline"/></div>
+              <label for="dateline">Dateline:</label> Did you cross the International dateline? (Not everyone holds of this modifier. Consult your local orthodox Rabbi.)<br />
+              <div class="col-xs-12 col-sm-10 col-sm-push-1"><input type="range" min="-1" max="1" step="1" value="0" name="dateline" id="dateline" /></div>
               <label class="col-xs-1 col-sm-pull-10">West</label>
               <label class="text-right col-xs-1 col-xs-offset-9 col-sm-offset-0">East</label>
           </div>
         </div>
         <div class="form-group">
           <label for="day">Day of the Omer (optional):</label> Leave blank to have the correct day calculated for you.<br />
-          <input type="number" class="form-control" name="day" size="2" id=
-          "day" min="1" max="49" step="1" placeholder="Day of the Omer" />
+          <input type="number" class="form-control" name="day" size="2" id="day" min="1" max="49" step="1" placeholder="Day of the Omer" />
         </div>
         <div class="form-group">
-          <label for="day">Date (optional):</label> For getting day that is not today. Won't grey out the bracha. Good for printing.<br />
+          <label for="date">Date (optional):</label> For getting day that is not today. Won't grey out the bracha. Good for printing.<br />
           <input type="date" class="form-control" name="date" id="date" />
         </div>
       </div>
