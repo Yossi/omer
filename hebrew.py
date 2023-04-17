@@ -51,7 +51,9 @@ def textforday(kwargs):
                45: 'ראש חודש סיון'}
 
     try:
-        tzeit = 'צאת הכוכבים׃' + kwargs['nightfall'].strftime(u'%H:%M %Y-%m-%d')
+        nightfall = kwargs['nightfall'].strftime('%Y-%m-%d %H:%M')
+        tzeit = 'צאת הכוכבים׃ <time datetime="{0}" dir="ltr">{0}</time>'.format(nightfall)
+
         twilight = 'background-color:#ddd;' if kwargs['now'] < kwargs['nightfall'] and kwargs['now'] > kwargs['sunset'] and not kwargs['print'] else ''
         bracha_style = 'color:#aaa;font-size:14px;' if kwargs['now'] < kwargs['sunset'] and kwargs['now'] > kwargs['dawn'] and not kwargs['print'] else 'font-size:21px;'
     except KeyError:

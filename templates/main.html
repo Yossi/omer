@@ -98,7 +98,12 @@
     <table>
       <tr>
         <td>
-          {{ tzeit }} - <span style="text-decoration: underline;" onClick=getLocation() tabindex=0>{{ zipcode }}</span> {{ special }}
+          {{ tzeit | safe }}
+          -
+          <span style="text-decoration: underline;" onClick=getLocation() tabindex=0>
+            {{ zipcode }}
+          </span>
+          {{ special }}
           <hr>
         </td>
       </tr>
