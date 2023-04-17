@@ -4,6 +4,18 @@ A webserver for helping Jews fulfill the mitzvah of counting the 49 days of the 
 
 During the season of use, it is hosted at [yossi.pythonanywhere.com](https://yossi.pythonanywhere.com).
 
+<!--
+# After printing browser output to pdf as ../screenshot.pdf:
+brew install imagemagick
+convert \
+    -density 150 \
+    -trim +repage \
+    -border 5% -bordercolor white \
+    ../screenshot.pdf \
+    screenshot.gif
+-->
+![Screenshot](./screenshot.gif)
+
 ## Running locally
 
 To setup the local environment, you will need pyenv, or a system with python 3.10 already installed. (As of 2023-04-16, python 3.11 gives errors when installing the requirements.)
