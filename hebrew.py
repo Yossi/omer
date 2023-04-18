@@ -51,11 +51,12 @@ def textforday(kwargs):
                45: 'ראש חודש סיון'}
 
     try:
-        tzeit = 'צאת הכוכבים׃' + kwargs['nightfall'].strftime(u'%H:%M %Y-%m-%d')
+        tzeit_string = 'צאת הכוכבים׃'
+        tzeit_time = kwargs['nightfall'].strftime('%H:%M %Y-%m-%d')
         twilight = 'background-color:#ddd;' if kwargs['now'] < kwargs['nightfall'] and kwargs['now'] > kwargs['sunset'] and not kwargs['print'] else ''
         bracha_style = 'color:#aaa;font-size:14px;' if kwargs['now'] < kwargs['sunset'] and kwargs['now'] > kwargs['dawn'] and not kwargs['print'] else 'font-size:21px;'
     except KeyError:
-        tzeit, twilight, bracha_style = 'Zmanim or zipcode error: Next day appears at noon', '', ''
+        tzeit_string, tzeit_time, twilight, bracha_style = 'Zmanim or zipcode error: Next day appears at noon', '', '', ''
 
     bracha = 'בָּרוּךְ אַתָּה יְהֹוָה אֱלֹהֵֽינוּ מֶֽלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּשָֽׁנוּ בְּמִצְוֹתָיו, וְצִוָּֽנוּ עַל סְפִירַת הָעֽוֹמֶר'
     if kwargs['print']:
@@ -80,7 +81,8 @@ def textforday(kwargs):
               'anabechoach': anabechoach(day-1),
               'baruchshem': baruchshem+'׃',
               'ribonoshelolam': ribonoshelolam(day, kwargs['print']),
-              'tzeit': tzeit,
+              'tzeit_string': tzeit_string,
+              'tzeit_time': tzeit_time,
               'hash': kwargs.get('hash', '_'),
               'debug': kwargs
              }

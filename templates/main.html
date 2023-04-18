@@ -98,7 +98,7 @@
     <table>
       <tr>
         <td>
-          {{ tzeit }} - <span style="text-decoration: underline;" onClick=getLocation() tabindex=0>{{ zipcode }}</span> {{ special }}
+          {{ tzeit_string }} <time datetime="{{ tzeit_time }}">{{ tzeit_time }}</time> - <span style="text-decoration: underline;" onClick=getLocation() tabindex=0>{{ zipcode }}</span> {{ special }}
           <hr>
         </td>
       </tr>
