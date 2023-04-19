@@ -83,7 +83,7 @@ def textforday(kwargs):
               'ribonoshelolam': ribonoshelolam(day, kwargs['print']),
               'tzeit_string': tzeit_string,
               'tzeit_time': tzeit_time,
-              'hash': kwargs.get('hash', '_'),
+              'hash': kwargs.get('hash', ''),
               'debug': kwargs
              }
 

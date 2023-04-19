@@ -109,8 +109,11 @@ def process_args(args):
 
     args['day_of_omer'] = day_of_omer
 
-    with open(os.path.join(THIS_FOLDER, 'version.hash')) as fp:
-        args['hash'] = fp.readline().strip()
+    try:
+        with open(os.path.join(THIS_FOLDER, 'version.hash')) as fp:
+            args['hash'] = fp.readline().strip() + '/'
+    except FileNotFoundError:
+        args['hash'] = ''
 
 if __name__ == '__main__':
     from pprint import pprint
