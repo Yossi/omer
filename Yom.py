@@ -1,34 +1,33 @@
 #!/usr/bin/python
-# -*- coding: UTF-8 -*-
 
 days = [
-    u"יוֹם אֶחָד",
-    u"שְׁנֵי",
-    u"שְׁלשָׁה",
-    u"אַרְבָּעָה",
-    u"חֲמִשָּׁה",
-    u"שִׁשָּׁה",
-    u"שִׁבְעָה",
-    u"שְׁמוֹנָה",
-    u"תִּשְׁעָה",
-    u"עֲשָׂרָה",
-    u"עָשָׂר",
-    u"אַחַד",
-    u"שְׁנֵים",
-    u"עֶשְׂרִים",
-    u"שְׁלשִׁים",
-    u"אַרְבָּעִים",
-    u"",
-    u"אֶחָד",
-    u"שְׁנַֽיִם",
-    u"שָׁבֽוּעַ אֶחָד"
+    "יוֹם אֶחָד",
+    "שְׁנֵי",
+    "שְׁלשָׁה",
+    "אַרְבָּעָה",
+    "חֲמִשָּׁה",
+    "שִׁשָּׁה",
+    "שִׁבְעָה",
+    "שְׁמוֹנָה",
+    "תִּשְׁעָה",
+    "עֲשָׂרָה",
+    "עָשָׂר",
+    "אַחַד",
+    "שְׁנֵים",
+    "עֶשְׂרִים",
+    "שְׁלשִׁים",
+    "אַרְבָּעִים",
+    "",
+    "אֶחָד",
+    "שְׁנַֽיִם",
+    "שָׁבֽוּעַ אֶחָד"
 ]
 
-vov_hachibur = [ u"", u"וְ", u"וּ", u"וַ" ]
+vov_hachibur = [ "", "וְ", "וּ", "וַ" ]
 
-yomim = [ u"", u" יוֹם", u" יָמִים", u" שָׁבוּעוֹת" ]
+yomim = [ "", " יוֹם", " יָמִים", " שָׁבוּעוֹת" ]
 
-space = [ u"", u" " ]
+space = [ "", " " ]
 
 indices = [
     (  0, 0, 0, 16, 0 ), #  1
@@ -83,12 +82,13 @@ indices = [
 ]
 
 def makeDaysString(day):
-    return u"<span class=bold>%s%s%s%s%s</span> " % (
-                              days         [ indices[ day ][0] ],
-                              space        [ indices[ day ][1] ],
-                              vov_hachibur [ indices[ day ][2] ],
-                              days         [ indices[ day ][3] ],
-                              yomim        [ indices[ day ][4] ] )
+    return "<span class=bold>%s%s%s%s%s</span> " % (
+        days         [ indices[ day ][0] ],
+        space        [ indices[ day ][1] ],
+        vov_hachibur [ indices[ day ][2] ],
+        days         [ indices[ day ][3] ],
+        yomim        [ indices[ day ][4] ]
+    )
 '''
  0
  1 Shovua Ekhod  ()
@@ -113,9 +113,9 @@ week_indices = [
 
 def makeShavuoisString(shavua):
     if not shavua:
-        return u''
-    return u"שֶׁהֵם <span class=bold>%s%s</span> " % ( days[ week_indices[ shavua ][0] ],
-                                                    yomim [ week_indices[ shavua ][1] ]  )
+        return ''
+    return "שֶׁהֵם <span class=bold>%s%s</span> " % ( days[ week_indices[ shavua ][0] ],
+                                                   yomim [ week_indices[ shavua ][1] ]  )
 
 remaining_index = [ 0, 1, 2, 2, 1, 3, 1 ]
 
@@ -128,8 +128,7 @@ def yom(day):
     days = makeDaysString(remaining_days - 1)
 
     if day < 6:
-        return u"הַיּוֹם %sלָעֽוֹמֶר" % (total_days)
+        return "הַיּוֹם %sלָעֽוֹמֶר" % (total_days)
     if not remaining_days:
-        return u"הַיּוֹם %s%sלָעֽוֹמֶר" % (total_days, weeks)
-    return u"הַיּוֹם %s%s<span class=bold>%s</span>%sלָעֽוֹמֶר" % (total_days, weeks, vov_hachibur[remaining_index[remaining_days]], days)
-
+        return "הַיּוֹם %s%sלָעֽוֹמֶר" % (total_days, weeks)
+    return "הַיּוֹם %s%s<span class=bold>%s</span>%sלָעֽוֹמֶר" % (total_days, weeks, vov_hachibur[remaining_index[remaining_days]], days)
