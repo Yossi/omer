@@ -1,5 +1,5 @@
 ﻿from flask import render_template
-from Yom import yom # creates just the "hayom...laomer" line
+from Yom import yom # returns just the "hayom...laomer" line
 import yaml
 import os
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
