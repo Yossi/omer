@@ -19,7 +19,7 @@ source virtualenvwrapper.sh
 workon omer
 echo Virtualenv omer activated
 
-echo Install requirements one by one to not blow up storage
+echo Install requirements one by one in order to not blow up storage
 
 while read -r line || [[ -n "$line" ]]; do
     if [[ $line != \#* ]]; then

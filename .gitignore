@@ -59,6 +59,7 @@ linuxvenv*/
 sandbox/
 secrets.py
 venv3/
+venv310/
 all year times/
 test/
 .vscode/
