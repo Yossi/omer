@@ -24,12 +24,6 @@ def send_index():
     response.cache_control.no_cache = True
     return response
 
-@app.route('/fonts/<hash>/<path:path>')
-def send_font(hash, path):
-    response = make_response(send_from_directory('data/fonts', path))
-    response.cache_control.max_age = 60 * 60 * 24 * 365
-    return response
-
 @app.route('/icon/<hash>/<path:path>')
 def send_icon(hash, path):
     response = make_response(send_from_directory('data/icon', path))
