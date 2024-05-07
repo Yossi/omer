@@ -146,8 +146,8 @@ def anabechoach(day):
     out = []
     for num, row in enumerate(anabechoach):
         if num != week:
-            out.append('\n<tr><td class=left>' + row.split('  ')[-1] +
-                       '</td><td>.' + '  '.join(row.split('  ')[:-1]) + '</td></tr>')
+            out.append('\n<tr><td class=left style="white-space: nowrap;">' + row.split('  ')[-1] + '</td>' +
+                       '<td>.' + '  '.join(row.split('  ')[:-1]) + '</td></tr>')
         else:
             a = row.split('  ')
             bolded_row = '  '.join(a[:day]) + \
@@ -163,10 +163,10 @@ def ribonoshelolam(day, prnt=False):
         week, day = divmod(day-1, 7)
         if week in (1, 5):
             s = 'י' + sefiros[week][2:] if week == 5 else sefiros[week]
-            return '<span class=bigbold style="white-space: nowrap;">' + sefiros[day] + ' שֶׁבִּ' + s + '</span>'
+            return '<span class=bigbold>' + sefiros[day] + ' שֶׁבִּ' + s + '</span>'
         else:
             s = 'ת' + sefiros[week][2:] if week == 2 else sefiros[week]
-            return '<span class=bigbold style="white-space: nowrap;">' + sefiros[day] + ' שֶׁבְּ' + s + '</span>'
+            return '<span class=bigbold>' + sefiros[day] + ' שֶׁבְּ' + s + '</span>'
 
     ribonoshelolam = [
         'רִבּוֹנוֹ שֶׁל עוֹלָם, אַתָּה צִוִּיתָֽנוּ עַל יְדֵי מֹשֶׁה עַבְדֶּֽךָ לִסְפּוֹר סְפִירַת הָעֽוֹמֶר כְּדֵי לְטַהֲרֵֽנוּ מִקְּֿלִפּוֹתֵֽינוּ וּמִטֻּמְאוֹתֵֽינוּ, כְּמוֹ שֶׁכָּתַֽבְתָּ בְּתוֹרָתֶֽךָ׃',
