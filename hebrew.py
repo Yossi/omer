@@ -146,7 +146,7 @@ def anabechoach(day):
     out = []
     for num, row in enumerate(anabechoach):
         if num != week:
-            out.append('\n<tr><td class=left style="white-space: nowrap;">' + row.split('  ')[-1] + '</td>' +
+            out.append('\n<tr><td class=left>' + row.split('  ')[-1] + '</td>' +
                        '<td>.' + '  '.join(row.split('  ')[:-1]) + '</td></tr>')
         else:
             a = row.split('  ')
