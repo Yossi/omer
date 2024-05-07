@@ -23,7 +23,7 @@ echo Install requirements one by one in order to not blow up storage
 
 while read -r line || [[ -n "$line" ]]; do
     if [[ $line != \#* ]]; then
-        pip install -U --upgrade-strategy only-if-needed "$line"
+        pip install -U --upgrade-strategy eager "$line"
     fi
 done < requirements.txt
 
