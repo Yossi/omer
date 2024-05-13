@@ -1,8 +1,9 @@
 from flask import render_template
-from Yom import yom # returns just the "hayom...laomer" line
+import Yom
 import yaml
 import os
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+
 
 def hebrew_numeral(val, gershayim=True):
     hsn = yaml.load(open(os.path.join(THIS_FOLDER,'data/hebrew-special-numbers/styles/default.yml'), encoding="utf8"), Loader=yaml.SafeLoader)
@@ -75,10 +76,10 @@ def textforday(kwargs):
               'special': special.get(day, ''),
               'bracha_style': bracha_style,
               'bracha': bracha+'׃',
-              'yom': yom(day-1)+'׃',
+              'yom': Yom.yom(day)+'׃',
               'harachaman': harachaman+'׃',
               'lamnatzeach': lamnatzeach(day, kwargs['print']),
-              'anabechoach': anabechoach(day-1),
+              'anabechoach': anabechoach(day),
               'baruchshem': baruchshem+'׃',
               'ribonoshelolam': ribonoshelolam(day, kwargs['print']),
               'tzeit_string': tzeit_string,
@@ -88,6 +89,7 @@ def textforday(kwargs):
              }
 
     return render_template('main.html', **output)
+
 
 def lamnatzeach(day, prnt=False):
     cday = day
@@ -132,6 +134,7 @@ def lamnatzeach(day, prnt=False):
     l = lamnatzeach.split('  ')
     return ' '.join(l[:cday+3]) + '\n<span class=bigbold>' + l[cday+3] + '</span>\n' + ' '.join(l[cday+4:])
 
+
 def anabechoach(day):
     anabechoach = [ # double spacing here for HTML as well as the roshei teivos sets at the end of the line
         'אָנָּא,  בְּכֹֽחַ  גְּדֻלַּת  יְמִינְֿךָ,  תַּתִּיר  צְרוּרָה  אב"ג ית"ץ',
@@ -142,7 +145,7 @@ def anabechoach(day):
         'יָחִיד,  גֵּאֶה,  לְעַמְּֿךָ  פְּנֵה,  זוֹכְֿרֵי  קְדֻשָּׁתֶֽךָ  יג"ל פז"ק',
         'שַׁוְעָתֵֽנוּ  קַבֵּל,  וּשְֿׁמַע  צַעֲקָתֵֽנוּ,  יוֹדֵֽעַ  תַּעֲלוּמוֹת  שק"ו צי"ת'
     ]
-    week, day = divmod(day, 7)
+    week, day = divmod(day-1, 7)
     out = []
     for num, row in enumerate(anabechoach):
         if num != week:
@@ -156,6 +159,7 @@ def anabechoach(day):
             b = bolded_row.strip().split('  ')
             out.append('\n<tr><td class=left>' + b[-1] + '</td><td>.' + '  '.join(b[:-1]) + '</td></tr>')
     return  ''.join(out)
+
 
 def ribonoshelolam(day, prnt=False):
     def sefiros(day):
