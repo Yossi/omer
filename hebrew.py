@@ -1,4 +1,4 @@
-﻿from flask import render_template
+from flask import render_template
 from Yom import yom # returns just the "hayom...laomer" line
 import yaml
 import os
@@ -155,7 +155,7 @@ def anabechoach(day):
             '  '.join(a[day+1:])
             b = bolded_row.strip().split('  ')
             out.append('\n<tr><td class=left>' + b[-1] + '</td><td>.' + '  '.join(b[:-1]) + '</td></tr>')
-    return u''.join(out)
+    return  ''.join(out)
 
 def ribonoshelolam(day, prnt=False):
     def sefiros(day):
