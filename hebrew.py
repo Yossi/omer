@@ -132,7 +132,7 @@ def lamnatzeach(day, prnt=False):
             'אֱלֹקֵֽינוּ'
         )
     l = lamnatzeach.split('  ')
-    return ' '.join(l[:cday+3]) + '\n<span class=bigbold>' + l[cday+3] + '</span>\n' + ' '.join(l[cday+4:])
+    return ' '.join(l[:cday+3]) + '<span class=bigbold>' + l[cday+3] + '</span>' + ' '.join(l[cday+4:])
 
 
 def anabechoach(day):
