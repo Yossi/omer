@@ -1,6 +1,7 @@
-from flask import render_template
+﻿from flask import render_template
 import Yom
 import yaml
+import json
 import os
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 
@@ -30,7 +31,43 @@ def hebrew_numeral(val, gershayim=True):
 
     return add_gershayim(retval) if gershayim else retval
 
-def textforday(kwargs):
+
+def jsonforday(kwargs):
+    '''
+        kwargs is a dict with keys: ['day_of_omer', 'print', 'zipcode', 'hash', 'now', 'dawn', 'sunset', 'nightfall']
+        where:
+            day_of_omer is an int
+            print is a bool
+            zipcode is a string
+            hash is a string
+            rest are datetime
+    '''
+
+    output = {}
+    day = kwargs['day_of_omer'] # dont feel like renaming every instance below
+
+    if day not in range(1,50):
+        return '{}'
+
+    output['day'] = day
+    output['bracha'] = 'בָּרוּךְ אַתָּה יְהֹוָה אֱלֹהֵֽינוּ מֶֽלֶךְ הָעוֹלָם, אֲשֶׁר קִדְּֿשָֽׁנוּ בְּמִצְוֹתָיו, וְצִוָּֽנוּ עַל סְפִירַת הָעֽוֹמֶר׃'
+    output['yom'] = Yom.yomim[day-1]
+    output['harachaman'] = 'הָרַחֲמָן הוּא יַחֲזִיר לָֽנוּ עֲבוֹדַת בֵּית הַמִּקְדָּשׁ לִמְֿקוֹמָהּ, בִּמְהֵרָה בְיָמֵֽינוּ אָמֵן סֶֽלָה׃'
+    output['lamnatzeach'] = lamnatzeach(day)
+    output['anabechoach'] = ['אָנָּא,', 'בְּכֹֽחַ', 'גְּדֻלַּת', 'יְמִינְֿךָ,', 'תַּתִּיר', 'צְרוּרָה', 'אב"ג ית"ץ',
+                             'קַבֵּל', 'רִנַּת', 'עַמְּֿךָ,', 'שַׂגְּֿבֵֽנוּ,', 'טַהֲרֵֽנוּ,', 'נוֹרָא', 'קר"ע שט"ן', 
+                             'נָא', 'גִבּוֹר,', 'דּוֹרְֿשֵׁי', 'יִחוּדְֿךָ,', 'כְּבָבַת', 'שָׁמְֿרֵם', 'נג"ד יכ"ש', 
+                             'בָּרְֿכֵם,', 'טַהֲרֵם,', 'רַחֲמֵי', 'צִדְֿקָתְֿךָ', 'תָּמִיד', 'גָּמְֿלֵם', 'בט"ר צת"ג', 
+                             'חֲסִין', 'קָדוֹשׁ,', 'בְּרוֹב', 'טוּבְֿךָ', 'נַהֵל', 'עֲדָתֶֽךָ', 'חק"ב טנ"ע', 
+                             'יָחִיד,', 'גֵּאֶה,', 'לְעַמְּֿךָ', 'פְּנֵה,', 'זוֹכְֿרֵי', 'קְדֻשָּׁתֶֽךָ', 'יג"ל פז"ק', 
+                             'שַׁוְעָתֵֽנוּ', 'קַבֵּל,', 'וּשְֿׁמַע', 'צַעֲקָתֵֽנוּ,', 'יוֹדֵֽעַ', 'תַּעֲלוּמוֹת', 'שק"ו צי"ת']
+    output['baruchshem'] = 'בָּרוּךְ שֵׁם כְּבוֹד מַלְֿכוּתוֹ לְעוֹלָם וָעֶד׃'
+    output['ribonoshelolam'] = ribonoshelolam(day)
+    
+    return json.dumps(output)
+
+
+def htmlforday(kwargs):
     '''
         kwargs is a dict with keys: ['day_of_omer', 'print', 'zipcode', 'hash', 'now', 'dawn', 'sunset', 'nightfall']
         where:
