@@ -10,6 +10,8 @@ from pyluach import dates, hebrewcal
 
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 
+flatten = lambda *n: (e for a in n for e in (flatten(*a) if isinstance(a, (tuple, list, zip)) else (a,)))
+
 def ll_to_zip(latitude, longitude):
     with SearchEngine() as search:
         return search.by_coordinates(float(latitude), float(longitude), radius=50, returns=1)[0].zipcode
