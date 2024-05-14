@@ -27,10 +27,11 @@ while read -r line || [[ -n "$line" ]]; do
     fi
 done < requirements.txt
 
-# pip install -U --upgrade-strategy only-if-needed -r requirements.txt
+# pip install -U --upgrade-strategy eager -r requirements.txt
+
 echo Attempting to list outdated packages:
 pip list --outdated
-rm -rf /tmp/* /tmp/.*
+rm -rf /tmp/*
 rm -rf ../.cache
 rm -rf .github/
 rm .gitignore
