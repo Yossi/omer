@@ -10,10 +10,6 @@
 
     <link id="favicon" rel="icon" type="image/png" href="/icon/{{ hash }}omer_favicon.png">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Hebrew:wght@100..900&display=swap" rel="stylesheet">
-
     <script type="text/javascript">
     (function () {
     var canvas = document.createElement('canvas'),
@@ -67,9 +63,15 @@
     </script>
 
     <style type="text/css">
+      @font-face {
+        font-family: 'Taamey';
+        src: url('../fonts/{{ hash }}Taamey_D.woff2') format('woff2');
+        font-weight: normal;
+        font-style: normal;
+      }
       body
       {
-        font-family:'Noto Serif Hebrew';
+        font-family:'Taamey';
         font-size:16px;
         max-width:680px;
         min-width:80px; /*should be 380px*/
