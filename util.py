@@ -38,7 +38,8 @@ def date_line_offset(dateline):
 
 def hebrew_date(greg_date):
     heb = dates.HebrewDate.from_pydate(greg_date)
-    return f'{hebrewcal.Month(heb.year, heb.month).month_name()} {heb.day}, {heb.year}'
+    return heb
+    # return f'{hebrewcal.Month(heb.year, heb.month).month_name()} {heb.day}, {heb.year}'
 
 def chabad_org(zipcode, date=''):
     ''' returns a tuple of the hebrew date for the majority of today's gregorian date (as the server sees it) and
@@ -67,7 +68,8 @@ def omer_day(heb_date):
     ''' returns the day of the omer for the given hebrew date (i.e. answers the question "what omer do we count on the evening it becomes this hebrew date?")
         returns None if the date is not during the omer
     '''
-    month, day = heb_date.partition(',')[0].rpartition(' ')[::2]
+    # month, day = heb_date.partition(',')[0].rpartition(' ')[::2]
+    month, day = f'{heb_date:%B}', heb_date.day
 
     #if nissan and day > 16: omer = day - 15
     #if iyar: omer = 15 + day
@@ -77,7 +79,7 @@ def omer_day(heb_date):
               'Iyar': 15,
               'Sivan': 44}
 
-    omer = int(day) + offset.get(month, 50) # 50 to make sure it is always out of range the rest of the year
+    omer = day + offset.get(month, 50) # 50 to make sure it is always out of range the rest of the year
     return omer if omer in range(0, 50) else 0
 
 def process_args(args):
@@ -110,6 +112,7 @@ def process_args(args):
         day_of_omer = int(args['passed_day'])
 
     args['day_of_omer'] = day_of_omer
+    args['heb_date'] = heb_date if args['now'] > args.get('sunset', args['now'].replace(hour=12, minute=00, second=00)) or args['print'] else heb_date - 1
 
     try:
         with open(os.path.join(THIS_FOLDER, 'version.hash')) as fp:

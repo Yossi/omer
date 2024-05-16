@@ -3,6 +3,7 @@ import Yom
 import yaml
 import json
 import os
+import pprint
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 
 
@@ -34,12 +35,13 @@ def hebrew_numeral(val, gershayim=True):
 
 def jsonforday(kwargs):
     '''
-        kwargs is a dict with keys: ['day_of_omer', 'print', 'zipcode', 'hash', 'now', 'dawn', 'sunset', 'nightfall']
+        kwargs is a dict with keys: ['day_of_omer', 'print', 'zipcode', 'hash', 'heb_date', 'now', 'dawn', 'sunset', 'nightfall']
         where:
             day_of_omer is an int
             print is a bool
             zipcode is a string
             hash is a string
+            heb_date is a pyluach.dates.HebrewDate
             rest are datetime
     '''
 
@@ -69,12 +71,13 @@ def jsonforday(kwargs):
 
 def htmlforday(kwargs):
     '''
-        kwargs is a dict with keys: ['day_of_omer', 'print', 'zipcode', 'hash', 'now', 'dawn', 'sunset', 'nightfall']
+        kwargs is a dict with keys: ['day_of_omer', 'print', 'zipcode', 'hash', 'heb_date', 'now', 'dawn', 'sunset', 'nightfall']
         where:
             day_of_omer is an int
             print is a bool
             zipcode is a string
             hash is a string
+            heb_date is a pyluach.dates.HebrewDate
             rest are datetime
     '''
     day = kwargs['day_of_omer'] # dont feel like renaming every instance below
@@ -122,7 +125,8 @@ def htmlforday(kwargs):
               'tzeit_string': tzeit_string,
               'tzeit_time': tzeit_time,
               'hash': kwargs.get('hash', ''),
-              'debug': kwargs
+              'heb_date': kwargs['heb_date'],
+              'debug': pprint.pformat(kwargs)
              }
 
     return render_template('main.html', **output)
