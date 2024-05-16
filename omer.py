@@ -4,6 +4,11 @@ from flask import Flask, request, send_from_directory, make_response
 app = Flask(__name__)
 
 
+@app.template_filter()
+def dayofweek(heb_date):
+    return f'{heb_date:%A}'
+
+
 @app.route('/omer')
 @app.route('/omer/<format>')
 def omer(format='html'):

@@ -101,6 +101,7 @@
       td { text-align:right; }
       table { {{ twilight }} }
       #transparent { background:rgba(255, 255, 255, 0.3); }
+      .hr {padding: 0px}
     </style>
 
   </head>
@@ -108,12 +109,19 @@
     <table>
       <tr>
         <td>
+          <div class="left">{{ heb_date|dayofweek }} evening</div>
+        </td>
+        <td>
           {{ tzeit_string }} <time datetime="{{ tzeit_time }}">{{ tzeit_time }}</time> - <span style="text-decoration: underline;" onClick=getLocation() tabindex=0>{{ zipcode }}</span> {{ special }}
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" class="hr">
           <hr>
         </td>
       </tr>
       <tr>
-        <td>
+        <td colspan="2">
           <span id=bracha>{{ bracha }}</span><br><br>
           <span id=yom>{{ yom|safe }}</span><br><br>
           {{ harachaman }}<br><br>
@@ -121,7 +129,7 @@
         </td>
       </tr>
       <tr>
-        <td>
+        <td colspan="2">
           <table style="float:right;">
             {{ anabechoach|safe }}
             <tr>
@@ -133,11 +141,13 @@
         </td>
       </tr>
       <tr>
-        <td>
+        <td colspan="2">
           <br>{{ ribonoshelolam|safe }}
         </td>
       </tr>
     </table>
-    <!--{{ debug|safe }}-->
+    <!--
+{{ debug|safe }}
+    -->
   </body>
 </html>
