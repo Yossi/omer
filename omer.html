@@ -93,7 +93,7 @@
 </head>
 
 <body>
-  <div class="container">
+  <div class="container" style="width:90%;margin-left:100">
     <h2>Input Form for Counting Omer</h2>
 
     <p>During the daytime, we do not say the blessing. This will be represented as
@@ -104,15 +104,15 @@
     If you are not reciting with a Minyan, then it is probably best to wait for nightfall
     proper. The time of nightfall is provided.<br />
     To save yourself from needing to enter your information every time, simply bookmark
-    the resulting link. It will keep up-to-date on future visits.</p>
+    the resulting link. It will keep up-to-date on future refreshes.</p>
 
-    <form class="form" action="/omer" style="width:90%;margin-left:100">
+    <form class="form" action="/omer">
       <div class="form-group">
         <label for="zip">Zip Code:</label> If you are not in a zip code, do not rely on the times or days that are automatically calculated. (blank defaults to 94303, the Chabad of Palo Alto zip code)<br />
         <input type="text" name="zipcode" maxlength="5" size="2" pattern="[1-9][0-9]{0,4}" id="zip" class="form-control" placeholder="5 Digit Zip Code" />
       </div>
       <div class="form-group">
-        <label for="latlon">Lat/Lon:</label> Instead of zip code, you can enter your coordinates here (must still be somewhere that has a zip code).<br />
+        <label for="latlon">Lat/Lon:</label> Instead of zip code, you can enter coordinates here. Must be somewhere with a zip code, meaning longtitude will be negative. Note: three digits after the decimal is sufficient.<br />
         <input type="text" name="lat" id="lat" class="form-control" placeholder="Lattitude" />
         <input type="text" name="lng" id="lng" class="form-control" placeholder="Longtitude" />
         <input type="button" name="getloc" id="latlon" class="form-control" value="Current Location" onClick=getLocation() />
