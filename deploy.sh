@@ -1,6 +1,6 @@
 # manually set up a virtualenv on pythonanywhere
 # mkvirtualenv omer --python=/usr/bin/python3.10
-# also point the web tab at this after
+# also point the web tab at this afterwards
 
 echo Downloading https://github.com/Yossi/omer/archive/pythonanywhere.zip
 curl -L -O https://github.com/Yossi/omer/archive/pythonanywhere.zip

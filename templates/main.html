@@ -93,12 +93,20 @@
         color:red;
       }
       .center { text-align:center; }
-      .left 
-      { 
-        text-align:left;
-        white-space: nowrap; 
+      .left { text-align:left; }
+      .right {
+        text-align:right;
+        white-space: nowrap;
       }
-      td { text-align:right; }
+      .flex-container {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+      }
+      td {
+        text-align:right;
+        /*border: 1px solid;*/
+      }
       table { {{ twilight }} }
       #transparent { background:rgba(255, 255, 255, 0.3); }
       .hr {padding: 0px}
@@ -109,10 +117,10 @@
     <table>
       <tr>
         <td>
-          <div class="left">{{ heb_date|dayofweek }} evening</div>
-        </td>
-        <td>
-          {{ tzeit_string }} <time datetime="{{ tzeit_time }}">{{ tzeit_time }}</time> - <span style="text-decoration: underline;" onClick=getLocation() tabindex=0>{{ zipcode }}</span> {{ special }}
+          <div class="flex-container">
+            <span class="left">{{ heb_date|dayofweek }} evening</span>
+            <span class="right">{{ tzeit_string }} <time datetime="{{ tzeit_time }}">{{ tzeit_time }}</time> - <span style="text-decoration: underline;" onClick=getLocation() tabindex=0>{{ zipcode }}</span> {{ special }}</span>
+          </div>
         </td>
       </tr>
       <tr>
