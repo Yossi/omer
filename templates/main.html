@@ -96,7 +96,6 @@
       .left { text-align:left; }
       .right {
         text-align:right;
-        white-space: nowrap;
       }
       .flex-container {
         display: flex;
@@ -119,7 +118,7 @@
         <td>
           <div class="flex-container">
             <span class="left">{{ heb_date|dayofweek }} evening</span>
-            <span class="right">{{ tzeit_string }} <time datetime="{{ tzeit_time }}">{{ tzeit_time }}</time> - <span style="text-decoration: underline;" onClick=getLocation() tabindex=0>{{ zipcode }}</span> {{ special }}</span>
+            <span class="right">{{ tzeit_string }} <nobr><time datetime="{{ tzeit_time }}">{{ tzeit_time }}</time> - <span style="text-decoration: underline;" onClick=getLocation() tabindex=0>{{ zipcode }}</span> {{ special }}</nobr></span>
           </div>
         </td>
       </tr>
