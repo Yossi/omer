@@ -6,3 +6,6 @@ python-dateutil==2.9.0.post0
 PyYAML==6.0.1
 timezonefinder==6.5.0
 uszipcode==1.0.1
+
+# https://github.com/MacHu-GWU/uszipcode-project/issues/79
+sqlalchemy_mate==2.0.0.0
