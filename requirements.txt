@@ -3,7 +3,7 @@ Flask==3.0.3
 levenshtein==0.25.1
 pyluach==2.2.0
 python-dateutil==2.9.0.post0
-PyYAML==6.0.1
+PyYAML==6.0.2
 timezonefinder==6.5.2
 uszipcode==1.0.1
 
