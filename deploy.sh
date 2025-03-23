@@ -22,7 +22,7 @@ echo Virtualenv omer activated
 echo Install requirements one by one in order to not blow up storage
 
 while read -r line || [[ -n "$line" ]]; do
-    if [[ $line != \#* ]]; then
+    if [[ -n "$line" && $line != \#* ]]; then
         pip install -U --upgrade-strategy eager "$line"
     fi
 done < requirements.txt
@@ -31,6 +31,8 @@ done < requirements.txt
 
 echo Attempting to list outdated packages:
 pip list --outdated
+echo Deleting unnecessary files and folders:
+echo /tmp/* .cache .github/ .gitignore requirements.txt
 rm -rf /tmp/*
 rm -rf ../.cache
 rm -rf .github/
