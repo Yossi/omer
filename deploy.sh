@@ -1,5 +1,5 @@
 # manually set up a virtualenv on pythonanywhere
-# mkvirtualenv omer --python=/usr/bin/python3.10
+# mkvirtualenv omer --python=/usr/bin/python3.13
 # also point the web tab at this afterwards
 
 echo Downloading https://github.com/Yossi/omer/archive/pythonanywhere.zip
