@@ -4,6 +4,7 @@ import yaml
 import json
 import os
 import pprint
+from datetime import timedelta
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 
 
@@ -57,15 +58,15 @@ def jsonforday(kwargs):
     output['harachaman'] = 'הָרַחֲמָן הוּא יַחֲזִיר לָֽנוּ עֲבוֹדַת בֵּית הַמִּקְדָּשׁ לִמְֿקוֹמָהּ, בִּמְהֵרָה בְיָמֵֽינוּ אָמֵן סֶֽלָה׃'
     output['lamnatzeach'] = lamnatzeach(day)
     output['anabechoach'] = ['אָנָּא,', 'בְּכֹֽחַ', 'גְּדֻלַּת', 'יְמִינְֿךָ,', 'תַּתִּיר', 'צְרוּרָה', 'אב"ג ית"ץ',
-                             'קַבֵּל', 'רִנַּת', 'עַמְּֿךָ,', 'שַׂגְּֿבֵֽנוּ,', 'טַהֲרֵֽנוּ,', 'נוֹרָא', 'קר"ע שט"ן', 
-                             'נָא', 'גִבּוֹר,', 'דּוֹרְֿשֵׁי', 'יִחוּדְֿךָ,', 'כְּבָבַת', 'שָׁמְֿרֵם', 'נג"ד יכ"ש', 
-                             'בָּרְֿכֵם,', 'טַהֲרֵם,', 'רַחֲמֵי', 'צִדְֿקָתְֿךָ', 'תָּמִיד', 'גָּמְֿלֵם', 'בט"ר צת"ג', 
-                             'חֲסִין', 'קָדוֹשׁ,', 'בְּרוֹב', 'טוּבְֿךָ', 'נַהֵל', 'עֲדָתֶֽךָ', 'חק"ב טנ"ע', 
-                             'יָחִיד,', 'גֵּאֶה,', 'לְעַמְּֿךָ', 'פְּנֵה,', 'זוֹכְֿרֵי', 'קְדֻשָּׁתֶֽךָ', 'יג"ל פז"ק', 
+                             'קַבֵּל', 'רִנַּת', 'עַמְּֿךָ,', 'שַׂגְּֿבֵֽנוּ,', 'טַהֲרֵֽנוּ,', 'נוֹרָא', 'קר"ע שט"ן',
+                             'נָא', 'גִבּוֹר,', 'דּוֹרְֿשֵׁי', 'יִחוּדְֿךָ,', 'כְּבָבַת', 'שָׁמְֿרֵם', 'נג"ד יכ"ש',
+                             'בָּרְֿכֵם,', 'טַהֲרֵם,', 'רַחֲמֵי', 'צִדְֿקָתְֿךָ', 'תָּמִיד', 'גָּמְֿלֵם', 'בט"ר צת"ג',
+                             'חֲסִין', 'קָדוֹשׁ,', 'בְּרוֹב', 'טוּבְֿךָ', 'נַהֵל', 'עֲדָתֶֽךָ', 'חק"ב טנ"ע',
+                             'יָחִיד,', 'גֵּאֶה,', 'לְעַמְּֿךָ', 'פְּנֵה,', 'זוֹכְֿרֵי', 'קְדֻשָּׁתֶֽךָ', 'יג"ל פז"ק',
                              'שַׁוְעָתֵֽנוּ', 'קַבֵּל,', 'וּשְֿׁמַע', 'צַעֲקָתֵֽנוּ,', 'יוֹדֵֽעַ', 'תַּעֲלוּמוֹת', 'שק"ו צי"ת']
     output['baruchshem'] = 'בָּרוּךְ שֵׁם כְּבוֹד מַלְֿכוּתוֹ לְעוֹלָם וָעֶד׃'
     output['ribonoshelolam'] = ribonoshelolam(day)
-    
+
     return json.dumps(output)
 
 
@@ -96,6 +97,9 @@ def htmlforday(kwargs):
         tzeit_time = kwargs['nightfall'].strftime('%H:%M %Y-%m-%d')
         twilight = 'background-color:#ddd;' if kwargs['now'] < kwargs['nightfall'] and kwargs['now'] > kwargs['sunset'] and not kwargs['print'] else ''
         bracha_style = 'color:#aaa;font-size:14px;' if kwargs['now'] < kwargs['sunset'] and kwargs['now'] > kwargs['dawn'] and not kwargs['print'] else 'font-size:21px;'
+
+        midnight = kwargs['now'].replace(hour=0, minute=0) + timedelta(days=1)
+        refresh_time = next((t for t in (kwargs['dawn'], kwargs['sunset'], kwargs['nightfall']) if t > kwargs['now']), midnight)
     except KeyError:
         tzeit_string, tzeit_time, twilight, bracha_style = 'Zmanim or zipcode error: Next day appears at noon', '', '', ''
 
@@ -126,6 +130,7 @@ def htmlforday(kwargs):
               'tzeit_time': tzeit_time,
               'hash': kwargs.get('hash', ''),
               'heb_date': kwargs['heb_date'],
+              'refresh_time': refresh_time,
               'debug': pprint.pformat(kwargs)
              }
 

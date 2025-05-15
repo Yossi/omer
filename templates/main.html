@@ -37,6 +37,22 @@
 
     })();
 
+    (function() { // Auto-refresh when current time > {{ refresh_time }}
+      var refreshTimeStr = "{{ refresh_time.isoformat() }}";
+      var refreshTime = new Date(refreshTimeStr);
+
+      function checkRefresh() {
+        var now = new Date();
+        if (now > refreshTime) {
+          location.reload();
+        } else {
+          // Check every 10 seconds
+          setTimeout(checkRefresh, 10000);
+        }
+      }
+      checkRefresh();
+    })();
+
     var getLocation = function() {
       var startPos;
       var geoOptions = {
