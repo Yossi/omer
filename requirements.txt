@@ -1,7 +1,7 @@
 feedparser==6.0.11
 Flask==3.1.2
 levenshtein==0.27.1
-pyluach==2.2.0
+pyluach==2.3.0
 python-dateutil==2.9.0.post0
 PyYAML==6.0.2
 timezonefinder==8.0.0
