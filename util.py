@@ -24,8 +24,8 @@ def zip_to_ll(zipcode):
     return result.lat, result.lng
 
 def ll_to_tz(latitude, longitude):
-    tf = TimezoneFinder()
-    return tf.timezone_at(lat=latitude, lng=longitude)
+    with TimezoneFinder() as tf:
+        return tf.timezone_at(lat=latitude, lng=longitude)
 
 def time_at_zip(zipcode):
     timezone = gettz(ll_to_tz(*zip_to_ll(zipcode)))
