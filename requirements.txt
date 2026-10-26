@@ -4,7 +4,7 @@ levenshtein==0.27.5
 pyluach==2.3.0
 python-dateutil==3.0.0
 PyYAML==6.0.3
-timezonefinder==9.0.0
+timezonefinder==9.2.0
 uszipcode==1.0.1
 
 # https://github.com/MacHu-GWU/uszipcode-project/issues/79
